@@ -11,6 +11,7 @@
 
     <modules>
         <module>dao</module>
+        <module>model</module>
     </modules>
 
 

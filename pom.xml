@@ -10,10 +10,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>dao</module>
         <module>model</module>
         <module>dao-api</module>
+        <module>dao</module>
         <module>web-app</module>
+        <module>test-db</module>
     </modules>
 
     <properties>
@@ -41,6 +42,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.epam.brest</groupId>
+                <artifactId>test-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
@@ -51,16 +57,25 @@
                 <artifactId>spring-beans</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 
@@ -74,6 +89,11 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>4.0.0</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.200</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

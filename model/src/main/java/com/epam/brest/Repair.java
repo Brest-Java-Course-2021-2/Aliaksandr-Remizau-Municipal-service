@@ -1,14 +1,18 @@
 package com.epam.brest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Repair {
     private Integer repairId;
     private RepairType repairType;
+    private String address;
     private LevelOfDifficulty difficultyLevel;
-    private int amountOfCrew;
-    LocalDate preferenceTime;
-    private Integer orderId;
+    private LocalDate preferenceDate;
+    private Integer amountOfCrew;
+    private BigDecimal repairPrice;
+    private Integer clientId;
+
 
     public Integer getRepairId() {
         return repairId;
@@ -20,6 +24,14 @@ public class Repair {
 
     public RepairType getRepairType() {
         return repairType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setRepairType(RepairType repairType) {
@@ -34,27 +46,36 @@ public class Repair {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public int getAmountOfCrew() {
+    public LocalDate getPreferenceDate() {
+        return preferenceDate;
+    }
+
+    public void setPreferenceDate(LocalDate preferenceDate) {
+        this.preferenceDate = preferenceDate;
+    }
+
+    public Integer getAmountOfCrew() {
         return amountOfCrew;
     }
 
-    public void setAmountOfCrew(int amountOfCrew) {
+    public void setAmountOfCrew(Integer amountOfCrew) {
         this.amountOfCrew = amountOfCrew;
     }
 
-    public LocalDate getPreferenceTime() {
-        return preferenceTime;
+    public BigDecimal getRepairPrice() {
+        return repairPrice;
     }
 
-    public void setPreferenceTime(LocalDate preferenceTime) {
-        this.preferenceTime = preferenceTime;
+    public void setRepairPrice(BigDecimal repairPrice) {
+        this.repairPrice = repairPrice;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getClientId() {
+        return clientId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
+
 }

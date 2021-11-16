@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../../resources/static/css/bootstrap.css"
+          th:href="@{/resources/static/css/bootstrap.css}">
+    <link rel="stylesheet" href="../../resources/static/css/style.css"
+          th:href="@{/resources/static/css/style.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>Repairs</title>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm text-light p-1">
+        <div class="container-fluid">
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="/" class="navbar-brand"><img src="../../resources/static/img/logo.svg"
+                                                  th:src="@{/resources/static/img/logo.svg}"
+                                                  height="32" width="32" alt="MS"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="clients.html"
+                           th:href="@{/clients}">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="repairs.html"
+                           th:href="@{/repairs}">Repairs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav id="main-header"
+         class="py-1 mb-3 navbar navbar-light bg-light text-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand text-uppercase">Repairs</span>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="repair.html"
+                       th:href="@{/repair/New repair}"
+                       class="btn btn-sm btn-primary"
+                       title="Add repair">
+                        <i class="bi-plus"></i> <span class="d-none d-sm-inline">Add</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<section id="repairs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                        <tr><th>Client Name</th>
+                            <th>Repair Type</th>
+                            <th>Address</th>
+                            <th>Difficulty</th>
+                            <th>Preference Date</th>
+                            <th>Amount of crew</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>&nbspIvanov Ivan Ivanovich</td>
+                            <td>ELECTRIC</td>
+                            <td>Moskovskaya 236-105</td>
+                            <td>EASY</td>
+                            <td>30.12.2021</td>
+                            <td>1</td>
+                            <td>67</td>
+                            <td class="text-end">
+                                <a href="repair.html"
+                                   th:href="@{/repair/1}"
+                                   class="btn-sm btn-outline-secondary"
+                                   title="Edit repair">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                       title="Delete repair"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr><td>&nbspIvanov Ivan Ivanovich</td>
+                            <td>ANOTHER</td>
+                            <td>Moskovskaya 236-105</td>
+                            <td>HARD</td>
+                            <td>03.01.2022</td>
+                            <td>2</td>
+                            <td>180</td>
+                            <td class="text-end">
+                                <a href="repair.html"
+                                   th:href="@{/repair/1}"
+                                   class="btn-sm btn-outline-secondary"
+                                   title="Edit repair">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                       title="Delete repair"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr><td>&nbspIvanov Ivan Ivanovich</td>
+                            <td>ELECTRIC</td>
+                            <td>Moskovskaya 236-105</td>
+                            <td>EASY</td>
+                            <td>30.12.2021</td>
+                            <td>1</td>
+                            <td>67</td>
+                            <td class="text-end">
+                                <a href="repair.html"
+                                   th:href="@{/repair/1}"
+                                   class="btn-sm btn-outline-secondary"
+                                   title="Edit repair">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                       title="Delete repair"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbspVasiliev Nikolay Aleksandrovich</td>
+                            <td>PLUMBER</td>
+                            <td>Moskovskaya 230-100</td>
+                            <td>HARD</td>
+                            <td>23.12.2021</td>
+                            <td>2</td>
+                            <td>150</td>
+                            <td class="text-end">
+                                <a href="repair.html"
+                                   th:href="@{/repair/2}"
+                                   class="btn-sm btn-outline-secondary"
+                                   title="Edit repair">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                       title="delete repair"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <hr/>
+    <p class="text-center">&copy;Epam Brest-Java-Course 2021</p>
+</footer>
+
+<!-- Confirm delete Modal -->
+<div class="modal fade" id="deleteDialog" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
+                <h5 class="modal-title" id="exampleModalLabel">Delete repair</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Please confirm delete
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../resources/static/js/bootstrap.bundle.min.js"
+        th:href="@{/resources/static/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

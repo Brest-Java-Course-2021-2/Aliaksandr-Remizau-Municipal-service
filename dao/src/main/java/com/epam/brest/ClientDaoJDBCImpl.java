@@ -5,31 +5,31 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class OrderDaoJDBCImpl implements OrderDao{
+public class ClientDaoJDBCImpl implements ClientDao {
 
      private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public OrderDaoJDBCImpl(DataSource dataSource) {
+    public ClientDaoJDBCImpl(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
-    public List<Order> findAll() {
+    public List<Client> findAll() {
         return null;
     }
 
     @Override
-    public Integer create(Order order) {
+    public Integer create(Client client) {
         return null;
     }
 
     @Override
-    public Integer update(Order order) {
+    public Integer update(Client client) {
         return null;
     }
 
     @Override
-    public Integer delete(Integer orderId) {
+    public Integer delete(Integer client) {
         return null;
     }
 }

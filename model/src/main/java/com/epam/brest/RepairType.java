@@ -1,5 +1,5 @@
 package com.epam.brest;
 
 public enum RepairType {
-    ELECTRIC,PLUMBER,FINISHING
+    ELECTRIC,PLUMBER,FINISHING,ANOTHER
 }

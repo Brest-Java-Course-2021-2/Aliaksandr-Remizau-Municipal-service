@@ -1,3 +1,3 @@
-INSERT INTO orders(orders_Id, address) VALUES (1, 'Orlovskaya 41 apt.36');
-INSERT INTO orders(orders_Id, address) VALUES (2, 'Gavrilova 27 apt.13');
-INSERT INTO orders(orders_Id, address) VALUES (3, 'Orlovskaya 53 apt.30');
+INSERT INTO client(client_id, client_name) VALUES (1, "Aleksandrovich Aleksey Iosifovich");
+INSERT INTO client(orders_id, client_name) VALUES (2, "Orlov Petr Ivanovich");
+INSERT INTO client(orders_id, client_name) VALUES (3, "Borodach Michail Ivanovich");

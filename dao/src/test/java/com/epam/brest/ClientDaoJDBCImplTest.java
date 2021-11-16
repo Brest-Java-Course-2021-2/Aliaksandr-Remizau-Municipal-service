@@ -8,7 +8,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml","classpath*:test-db.xml"})
-class OrderDaoJDBCImplTest {
+class ClientDaoJDBCImplTest {
 
     @Test
     void findAll() {

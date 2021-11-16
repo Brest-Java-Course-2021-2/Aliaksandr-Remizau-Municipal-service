@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS ord;
+DROP TABLE IF EXISTS client;
 
-CREATE TABLE ord
+CREATE TABLE client
 (
-    ord_id int NOT NULL auto_increment,
-    ord_address varchar(50) NOT NULL UNIQUE,
-    CONSTRAINT ord_pk PRIMARY KEY (ord_id)
+    client_id int NOT NULL auto_increment,
+    client_name varchar(50) NOT NULL UNIQUE,
+    CONSTRAINT client_pk PRIMARY KEY (client_id)
 );

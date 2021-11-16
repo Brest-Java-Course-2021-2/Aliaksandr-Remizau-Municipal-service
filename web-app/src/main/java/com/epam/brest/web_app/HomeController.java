@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public String defaultPageRedirect() {
-        return "redirect:hello";
+        return "redirect:clients";
     }
 }

@@ -15,7 +15,7 @@
 <body>
 
 <header>
-    <nav class="navbar navbar-light bg-light navbar-expand-sm text-dark p-1">
+    <nav class="navbar navbar-light bg-purple navbar-expand-sm text-dark p-1">
         <div class="container-fluid">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -46,9 +46,9 @@
                 <li class="nav-item">
                     <a href="client.html"
                        th:href="@{/client/add}"
-                       class="btn btn-light"
+                       class="btn btn-success"
                        title="Add client">
-                        <i class="bi-plus"></i>&nbsp;<span class="d-none d-sm-inline">Add</span>
+                        <i class="bi-plus"></i>&nbsp;<span class="d-none d-sm-inline">New</span>
                     </a>
                 </li>
             </ul>
@@ -76,12 +76,12 @@
                             <td class="text-end">
                                 <a href="client.html"
                                    th:href="@{|/client/${client.clientId}|}"
-                                   class="btn-sm btn-outline-secondary"
+                                   class="btn-sm btn-outline-primary"
                                    title="Edit client">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
                                 <span data-bs-toggle="modal" data-bs-target="#deleteDialog"
                                       th:attr="data-id=${client.clientId},data-name=${client.clientName}">
-                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                    <a href="#" class="btn-sm btn-outline-danger"
                                        title="delete client"><i class="bi bi-trash"></i><span
                                             class="d-none d-md-inline">&nbsp;Delete</span>
                                     </a>
@@ -94,11 +94,11 @@
                             <td class="text-end">
                                 <a href="client.html"
                                    th:href="@{/client/2}"
-                                   class="btn-sm btn-outline-secondary"
+                                   class="btn-sm btn-outline-primary"
                                    title="Edit client">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
                                 <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                    <a href="#" class="btn-sm btn-outline-danger"
                                        title="delete client"><i class="bi bi-trash"></i><span
                                             class="d-none d-md-inline">&nbsp;Delete</span>
                                     </a>
@@ -111,11 +111,11 @@
                             <td class="text-end">
                                 <a href="client.html"
                                    th:href="@{/department/3}"
-                                   class="btn-sm btn-outline-secondary"
+                                   class="btn-sm btn-outline-primary"
                                    title="Edit department">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
                                 <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                    <a href="#" class="btn-sm btn-outline-danger"
                                        title="delete client"><i class="bi bi-trash"></i><span
                                             class="d-none d-md-inline">&nbsp;Delete</span>
                                     </a>
@@ -128,11 +128,11 @@
                             <td class="text-end">
                                 <a href="client.html"
                                    th:href="@{/client/4}"
-                                   class="btn-sm btn-outline-secondary"
+                                   class="btn-sm btn-outline-primary"
                                    title="Edit client">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
                                 <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                    <a href="#" class="btn-sm btn-outline-danger"
                                        title="delete client"><i class="bi bi-trash"></i><span
                                             class="d-none d-md-inline">&nbsp;Delete</span>
                                     </a>
@@ -145,11 +145,11 @@
                             <td class="text-end">
                                 <a href="client.html"
                                    th:href="@{/client/5}"
-                                   class="btn-sm btn-outline-secondary"
+                                   class="btn-sm btn-outline-primary"
                                    title="Edit client">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
                                 <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-secondary"
+                                    <a href="#" class="btn-sm btn-outline-danger"
                                        title="delete client"><i class="bi bi-trash"></i><span
                                             class="d-none d-md-inline">&nbsp;Delete</span>
                                     </a>

@@ -20,7 +20,8 @@
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="../../../../../../documentation/MunicipalService-specification.md" class="navbar-brand"><img src="../../resources/static/img/building.svg"
+            <a href="hello.html" class="navbar-brand">
+                <img src="../../resources/static/img/building.svg"
                                                   th:src="@{/resources/static/img/building.svg}"
                                                   height="32" width="32" alt="MS"></a>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -39,13 +40,13 @@
         </div>
     </nav>
     <nav id="main-header"
-         class="py-1 mb-3 navbar navbar-light bg-light text-dark">
+         class="py-1 mb-3 navbar navbar-light bg-light navbar-expand-sm text-dark">
         <div class="container-fluid">
             <span class="navbar-brand text-uppercase">Repairs</span>
-            <form class="d-flex" th:action="@{/repairs/search}" th:method="get">
+            <form class="d-flex expand-md " th:action="@{/repairs/search}" th:method="get">
                 <input class="form-control me-1" name="dateBefore" type="date" aria-label="Date" autofocus required>
                 <input class="form-control me-1" name="dateAfter" type="date" aria-label="Date" autofocus required>
-                <button class="btn btn-outline-success text-nowrap" type="submit">Search Preference Date
+                <button class="btn btn-outline-success  text-nowrap" type="submit">Search Preference Date
                 </button>
             </form>
             <ul class="navbar-nav">
@@ -54,7 +55,7 @@
                        th:href="@{/repair/New repair}"
                        class="btn btn-sm btn-success"
                        title="New repair">
-                        <i class="bi-plus"></i> <span class="d-none d-sm-inline">New</span>
+                        <i class="bi bi-box-arrow-in-down"></i> <span class="d-none d-md-inline">New</span>
                     </a>
                 </li>
             </ul>
@@ -64,7 +65,8 @@
 
 <section id="repairs">
     <div class="container-fluid">
-        <div class="row">
+        <div class="row justify-content-center">
+         <div class="row">
             <div class="col">
                 <div class="card">
                     <table class="table table-striped">
@@ -160,7 +162,8 @@
                     </table>
                 </div>
             </div>
-        </div>
+         </div>
+         </div>
     </div>
 </section>
 

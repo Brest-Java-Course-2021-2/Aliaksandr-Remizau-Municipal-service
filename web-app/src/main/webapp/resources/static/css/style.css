@@ -1,3 +1,13 @@
 body {
-    background-color: lightgrey;
+    background-color: teal;
+
+}
+.table {
+            text-align: center;
+        }
+table td:first-child{
+text-align: left;
+}
+table th:first-child{
+text-align: left;
 }

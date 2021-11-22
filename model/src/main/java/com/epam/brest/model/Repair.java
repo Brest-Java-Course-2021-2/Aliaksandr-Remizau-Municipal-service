@@ -1,4 +1,4 @@
-package com.epam.brest;
+package com.epam.brest.model;
 
 import java.time.LocalDate;
 import java.util.Objects;

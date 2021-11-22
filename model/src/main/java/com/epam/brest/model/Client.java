@@ -1,4 +1,4 @@
-package com.epam.brest;
+package com.epam.brest.model;
 
 import java.util.Objects;
 
@@ -7,6 +7,11 @@ public class Client {
     private String clientName;
 
     public Client(){
+    }
+
+    public Client(Integer clientId, String clientName) {
+        this.clientId = clientId;
+        this.clientName = clientName;
     }
 
     public Client(String clientName) {

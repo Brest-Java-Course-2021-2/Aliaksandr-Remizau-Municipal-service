@@ -11,11 +11,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-jdbc-conf.xml"})
-class ClientDaoJDBCImplTest {
+class ClientDaoJDBCImplIT {
 
     ClientDaoJDBCImpl clientDaoJDBC;
 
-    public ClientDaoJDBCImplTest(@Autowired ClientDao clientDaoJDBC) {
+    public ClientDaoJDBCImplIT(@Autowired ClientDao clientDaoJDBC) {
         this.clientDaoJDBC = (ClientDaoJDBCImpl) clientDaoJDBC;
     }
 

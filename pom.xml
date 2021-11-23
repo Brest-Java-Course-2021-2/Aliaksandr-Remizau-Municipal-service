@@ -13,8 +13,12 @@
         <module>model</module>
         <module>dao-api</module>
         <module>dao</module>
+        <module>service-api</module>
+        <module>service</module>
         <module>web-app</module>
         <module>test-db</module>
+
+
     </modules>
 
     <properties>
@@ -48,6 +52,16 @@
             </dependency>
             <dependency>
                 <groupId>com.epam.brest</groupId>
+                <artifactId>service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.epam.brest</groupId>
+                <artifactId>service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.epam.brest</groupId>
                 <artifactId>test-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -67,7 +81,11 @@
                 <artifactId>spring-jdbc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
@@ -103,6 +121,12 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>

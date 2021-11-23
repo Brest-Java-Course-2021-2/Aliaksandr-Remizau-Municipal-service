@@ -1,5 +1,8 @@
 package com.epam.brest.model;
 
+import com.epam.brest.model.type.LevelOfDifficulty;
+import com.epam.brest.model.type.RepairType;
+
 import java.time.LocalDate;
 import java.util.Objects;
 

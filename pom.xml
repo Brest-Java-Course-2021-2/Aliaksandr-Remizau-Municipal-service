@@ -26,12 +26,16 @@
         <maven.compiler.target>11</maven.compiler.target>
         <junit.version>5.4.0</junit.version>
         <spring.version>5.3.4</spring.version>
+        <log4j2.version>2.14.1</log4j2.version>
+        <javax.servlet.version>4.0.0</javax.servlet.version>
+        <h2.database.version>1.4.200</h2.database.version>
         <thymeleaf-spring5.version>3.0.12.RELEASE</thymeleaf-spring5.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
+
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -110,13 +114,23 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>4.0.0</version>
+                <version>${javax.servlet.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.200</version>
+                <version>${h2.database.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

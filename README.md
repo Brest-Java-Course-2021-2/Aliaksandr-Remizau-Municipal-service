@@ -3,7 +3,7 @@
 
 # Municipal service
 
-This web application for record-keeping and the presentation of tenants' requests for repairs .
+This web application for record-keeping  tenants' requests for repairs .
 
 ## Requirements
 

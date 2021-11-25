@@ -1,7 +1,14 @@
 package com.epam.brest.web_app;
 
+import com.epam.brest.dao.ClientDao;
+import com.epam.brest.model.Client;
+import com.epam.brest.service.ClientService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -19,8 +26,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -28,8 +36,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath:app-context-test.xml"})
 @Transactional
 class ClientControllerIT {
+    private final Logger log = LogManager.getLogger(ClientControllerIT.class);
     @Autowired
     private WebApplicationContext wac;
+    @Autowired
+    private ClientService clientService;
 
     private MockMvc mockMvc;
 
@@ -40,10 +51,11 @@ class ClientControllerIT {
 
     @org.junit.jupiter.api.Test
     void shouldReturnClientsPage() throws Exception {
+        log.debug("shouldReturnClientsPage()");
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/clients")
                 ).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("clients"))
                 //TODO:method
@@ -69,4 +81,25 @@ class ClientControllerIT {
                         )
                 )));
     }
+    @Test
+    void shouldAddClient() throws Exception{
+        log.debug("Execute test: shouldAddClient()");
+        //WHEN
+        assertNotNull(clientService);
+        int clientSizeBefore = clientService.count();
+        assertNotNull(clientSizeBefore);
+        Client client = new Client("Borisuk Oleg Aleksandrovich");
+        //THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/client")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("clientName", client.getClientName()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/clients"))
+                .andExpect(redirectedUrl("/clients"));
+        //VERIFY
+        assertEquals((int) clientSizeBefore, clientService.count() - 1);
+    }
+
 }

@@ -44,4 +44,6 @@ public interface ClientDao {
      */
 
     Integer delete(Integer clientId);
+
+    Integer count();
 }

@@ -32,6 +32,14 @@
         <constructor-arg name="clientDtoDao" ref="clientDtoDao"/>
     </bean>
 
+    <bean id="clientDao" class="com.epam.brest.dao.ClientDaoJDBCImpl">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="clientService" class="com.epam.brest.service.impl.ClientServiceImpl">
+        <constructor-arg name="clientDao" ref="clientDao"/>
+    </bean>
+
     <!-- Thymeleaf Template Resolver -->
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">

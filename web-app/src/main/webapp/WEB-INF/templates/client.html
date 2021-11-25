@@ -47,7 +47,8 @@
                     <i class="bi-arrow-left"></i></a>
             </li>
         </ul>
-        <span class="navbar-brand text-uppercase me-auto">Edit client</span>
+        <span class="navbar-brand text-uppercase me-auto"
+              th:text="${isNew} ? 'New client' : 'Edit client'">Edit client</span>
     </nav>
 </header>
 
@@ -57,13 +58,22 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
+                        <form id="clientForm"
+                              th:object="${client}"
+                              action="clients.html"
+                              th:action="@{${#httpServletRequest.servletPath}}"
+                              th:method="@{post}">
+
+                            <input id="field_clientId"
+                                   type="hidden"
+                                   th:field="*{clientId}"/>
                             <div class="mb-3">
                                 <label class="form-label"
                                        for="field_clientName">Client Name</label>
                                 <input class="form-control "
                                        id="field_clientName"
-                                       type="text" value="Ivanov Ivan Ivanovich"/>
+                                       type="text" value="Ivanov Ivan Ivanovich"
+                                       th:field="*{clientName}"/>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"
@@ -75,6 +85,7 @@
                             <div class="d-flex justify-content-end">
                                 <a href="clients.html"
                                    th:href="@{/clients}"
+                                   th:onclick="@{document.forms['clientForm'].submit(); return false;}"
                                    class="btn btn-danger"
                                    title="Cancel">Cancel</a>
                                 <a href="clients.html"

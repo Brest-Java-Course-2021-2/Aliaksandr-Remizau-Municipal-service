@@ -21,8 +21,11 @@ public class ClientDaoJDBCImpl implements ClientDao {
     private final Logger log = LogManager.getLogger(ClientDaoJDBCImpl.class);
 
      private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+     
      private final String SQL_ALL_CLIENTS = "select c.client_id, c.client_name from client c order by c.client_name";
-     private final String SQL_CREATE_CLIENT = "insert into client(client_name) values(:client_name)";
+     private final String SQL_CHECK_UNIQUE_CLIENT_NAME = "select count(c.client_name) " +
+             "from client c where lower(c.client_name) = lower(:clientName)";
+     private final String SQL_CREATE_CLIENT = "insert into client(client_name) values(:clientName)";
 
     public ClientDaoJDBCImpl(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -37,12 +40,20 @@ public class ClientDaoJDBCImpl implements ClientDao {
     @Override
     public Integer create(Client client) {
         log.debug("Execute create({})",client);
-        //TODO: is ClientUnique trow new Illegal
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("client_name",client.getClientName().toUpperCase());
+        if(!isClientUnique(client.getClientName())){
+            log.warn("Client with the same name {} already exists.", client.getClientName());
+            throw new IllegalArgumentException("Client with the same name already exists in DB.");
+        }
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName",client.getClientName().toUpperCase());
         KeyHolder keyHolder = new GeneratedKeyHolder();
          namedParameterJdbcTemplate.update(SQL_CREATE_CLIENT,sqlParameterSource,keyHolder);
         return (Integer) keyHolder.getKey();
+    }
 
+    private boolean isClientUnique(String clientName) {
+        log.debug("Check clientName: {} on unique", clientName);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", clientName);
+        return namedParameterJdbcTemplate.queryForObject(SQL_CHECK_UNIQUE_CLIENT_NAME, sqlParameterSource, Integer.class) == 0;
     }
 
     @Override

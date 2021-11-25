@@ -36,8 +36,8 @@ class ClientServiceImplIT {
         int newClientId = clientService.create(client);
         assertNotNull(newClientId);
         assertEquals((int) clientSizeBefore, clientService.count() - 1);
-
     }
+
     @Test
     void tryToCreateEqualsClient() {
         log.debug("Execute test: tryToCreateEqualsClient()");

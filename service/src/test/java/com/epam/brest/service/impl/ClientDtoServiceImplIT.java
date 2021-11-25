@@ -24,7 +24,7 @@ public class ClientDtoServiceImplIT {
     ClientDtoService clientDtoService;
 
     @Test
-    public void shouldAllWithNumberOfRepairs() {
+    public void shouldAllWithRepairs() {
         List<ClientDto> clients = clientDtoService.findAllWithRepairs();
         assertNotNull(clients);
         assertTrue(clients.size() > 0);

@@ -26,9 +26,15 @@ public class ClientDaoJDBCImpl implements ClientDao {
      private final String SQL_CHECK_UNIQUE_CLIENT_NAME = "select count(c.client_name) " +
              "from client c where lower(c.client_name) = lower(:clientName)";
      private final String SQL_CREATE_CLIENT = "insert into client(client_name) values(:clientName)";
+     private final String SQL_COUNT_CLIENT ="select count(*) from client";
 
+    @Deprecated
     public ClientDaoJDBCImpl(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    public ClientDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -64,6 +70,12 @@ public class ClientDaoJDBCImpl implements ClientDao {
     @Override
     public Integer delete(Integer client) {
         return null;
+    }
+
+    @Override
+    public Integer count() {
+        log.debug("count();");
+        return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_CLIENT,new MapSqlParameterSource(),Integer.class);
     }
 
     private class ClientRowMapper implements RowMapper<Client>{

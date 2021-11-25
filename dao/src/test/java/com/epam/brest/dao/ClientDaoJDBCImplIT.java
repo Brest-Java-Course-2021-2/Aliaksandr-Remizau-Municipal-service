@@ -35,11 +35,11 @@ class ClientDaoJDBCImplIT {
     void create(){
         log.debug("Execute test: create(");
         assertNotNull(clientDaoJDBC);
-        int clientSizeBefore = clientDaoJDBC.findAll().size();
+        int clientSizeBefore = clientDaoJDBC.count();
         Client client = new Client("Borisuk Oleg Aleksandrovich");
-        int newDepartmentId = clientDaoJDBC.create(client);
-        assertNotNull(newDepartmentId);
-        assertEquals((int) clientSizeBefore, clientDaoJDBC.findAll().size() - 1);
+        int newClientId = clientDaoJDBC.create(client);
+        assertNotNull(newClientId);
+        assertEquals((int) clientSizeBefore, clientDaoJDBC.count() - 1);
     }
 
     @Test
@@ -51,5 +51,14 @@ class ClientDaoJDBCImplIT {
             clientDaoJDBC.create(client);
             clientDaoJDBC.create(client);
         });
+    }
+
+    @Test
+    void shouldCount() {
+        assertNotNull(clientDaoJDBC);
+        Integer quantity = clientDaoJDBC.count();
+        assertNotNull(quantity);
+        assertTrue(quantity > 0);
+        assertEquals(Integer.valueOf(3), quantity);
     }
 }

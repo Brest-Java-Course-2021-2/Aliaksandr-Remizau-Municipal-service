@@ -1,5 +1,6 @@
 package com.epam.brest.web_app;
 
+import com.epam.brest.service.ClientDtoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ClientController {
+
+    private final ClientDtoService clientDtoService;
+
+    public ClientController(ClientDtoService clientDtoService) {
+        this.clientDtoService = clientDtoService;
+    }
+
     /**
      * Goto clients list page.
      *
@@ -15,6 +23,7 @@ public class ClientController {
      */
     @GetMapping(value = "/clients")
     public final String clients(Model model) {
+        model.addAttribute("clients", clientDtoService.findAllWithRepairs());
         return "clients";
     }
 

@@ -1,8 +1,8 @@
 package com.epam.brest.web_app;
 
-import com.epam.brest.dao.ClientDao;
 import com.epam.brest.model.Client;
 import com.epam.brest.service.ClientService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import static com.epam.brest.model.constants.ClientConstants.CLIENT_NAME_SIZE;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
@@ -102,4 +103,34 @@ class ClientControllerIT {
         assertEquals((int) clientSizeBefore, clientService.count() - 1);
     }
 
+    @Test
+    public void shouldOpenEditClientPageById() throws Exception {
+        log.debug("shouldOpenEditClientPageById()");
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/client/1")
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("client"))
+                .andExpect(model().attribute("isNew", is(false)))
+                .andExpect(model().attribute("client", hasProperty("clientId", is(1))))
+                .andExpect(model().attribute("client", hasProperty("clientName", is("Aleksandrovich Aleksey Iosifovich"))));
+    }
+
+    @Test
+    public void shouldUpdateClientAfterEdit() throws Exception {
+        log.debug("shouldUpdateClientAfterEdit()");
+        String testName = RandomStringUtils.randomAlphabetic(CLIENT_NAME_SIZE);
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/client/1")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("clientId", "1")
+                                .param("clientName", testName)
+                ).andExpect(status().isFound())
+                .andExpect(view().name("redirect:/clients"))
+                .andExpect(redirectedUrl("/clients"));
+        Client client = clientService.getClientById(1);
+        assertNotNull(client);
+        assertEquals(testName, client.getClientName());
+    }
 }

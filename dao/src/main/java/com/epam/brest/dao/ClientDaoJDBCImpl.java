@@ -18,15 +18,21 @@ import java.util.Locale;
 
 
 public class ClientDaoJDBCImpl implements ClientDao {
+
     private final Logger log = LogManager.getLogger(ClientDaoJDBCImpl.class);
 
-     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-     
-     private final String SQL_ALL_CLIENTS = "select c.client_id, c.client_name from client c order by c.client_name";
-     private final String SQL_CHECK_UNIQUE_CLIENT_NAME = "select count(c.client_name) " +
-             "from client c where lower(c.client_name) = lower(:clientName)";
-     private final String SQL_CREATE_CLIENT = "insert into client(client_name) values(:clientName)";
-     private final String SQL_COUNT_CLIENT ="select count(*) from client";
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private final String SQL_ALL_CLIENTS = "select c.client_id, c.client_name from client c order by c.client_name";
+    private final String SQL_CLIENT_BY_ID = "select c.client_id, c.client_name from client c " +
+            " where client_id = :clientId";
+    private final String SQL_CREATE_CLIENT = "insert into client(client_name) values(:clientName)";
+    private final String SQL_CHECK_UNIQUE_CLIENT_NAME = "select count(c.client_name) " +
+            "from client c where lower(c.client_name) = lower(:clientName)";
+    private final String SQL_UPDATE_CLIENT_NAME = "update client set client_name = :clientName " +
+            "where client_id = :clientId";
+    private final String SQL_DELETE_CLIENT_BY_ID = "delete from client where client_id = :clientId";
+    private final String SQL_COUNT_CLIENT = "select count(*) from client";
 
     @Deprecated
     public ClientDaoJDBCImpl(DataSource dataSource) {
@@ -40,19 +46,27 @@ public class ClientDaoJDBCImpl implements ClientDao {
     @Override
     public List<Client> findAll() {
         log.debug("Execute method: findAll");
-        return namedParameterJdbcTemplate.query(SQL_ALL_CLIENTS,new ClientRowMapper());
+        return namedParameterJdbcTemplate.query(SQL_ALL_CLIENTS, new ClientRowMapper());
+    }
+
+    @Override
+    public Client getClientById(Integer clientId) {
+        log.debug("getClientById id:{}", clientId);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientId", clientId);
+        return namedParameterJdbcTemplate.queryForObject(SQL_CLIENT_BY_ID, sqlParameterSource, new ClientRowMapper() {
+        });
     }
 
     @Override
     public Integer create(Client client) {
-        log.debug("Execute create({})",client);
-        if(!isClientUnique(client.getClientName())){
+        log.debug("Create client : {}", client);
+        if (!isClientUnique(client.getClientName())) {
             log.warn("Client with the same name {} already exists.", client.getClientName());
             throw new IllegalArgumentException("Client with the same name already exists in DB.");
         }
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName",client.getClientName().toUpperCase());
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", client.getClientName().toUpperCase());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-         namedParameterJdbcTemplate.update(SQL_CREATE_CLIENT,sqlParameterSource,keyHolder);
+        namedParameterJdbcTemplate.update(SQL_CREATE_CLIENT, sqlParameterSource, keyHolder);
         return (Integer) keyHolder.getKey();
     }
 
@@ -64,12 +78,17 @@ public class ClientDaoJDBCImpl implements ClientDao {
 
     @Override
     public Integer update(Client client) {
-        return null;
+        log.debug("Update client :{}", client);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", client.getClientName())
+                .addValue("clientId", client.getClientId());
+        return namedParameterJdbcTemplate.update(SQL_UPDATE_CLIENT_NAME, sqlParameterSource);
     }
 
     @Override
-    public Integer delete(Integer client) {
-        return null;
+    public Integer delete(Integer clientId) {
+        log.debug("delete client id:{}", clientId);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientId", clientId);
+        return namedParameterJdbcTemplate.update(SQL_DELETE_CLIENT_BY_ID, sqlParameterSource);
     }
 
     @Override

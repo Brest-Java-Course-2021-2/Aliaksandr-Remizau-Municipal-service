@@ -43,7 +43,9 @@ public class ClientController {
      */
     @GetMapping(value = "/client/{id}")
     public final String gotoEditClientPage(@PathVariable Integer id, Model model) {
-        log.debug("gotoEditClientPage(id:{},model:{}",id,model);
+        log.debug("gotoEditClientPage(id:{},model:{}", id, model);
+        model.addAttribute("isNew", false);
+        model.addAttribute("client", clientService.getClientById(id));
         return "client";
     }
 
@@ -67,8 +69,22 @@ public class ClientController {
      */
     @PostMapping(value = "/client")
     public String addClient(Client client) {
-        log.debug("addClient({})",client);
+        log.debug("addClient({})", client);
         this.clientService.create(client);
+        return "redirect:/clients";
+    }
+
+    /**
+     * Update client.
+     *
+     * @param client department with filled data.
+     * @return view name
+     */
+    @PostMapping(value = "/client/{id}")
+    public String updateClient(Client client) {
+
+        log.debug("updateClient({})", client);
+        this.clientService.update(client);
         return "redirect:/clients";
     }
 }

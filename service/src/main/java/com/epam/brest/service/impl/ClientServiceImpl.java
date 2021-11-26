@@ -19,10 +19,28 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client getClientById(Integer clientId) {
+        log.debug("getClientById(id:{})", clientId);
+        return this.clientDao.getClientById(clientId);
+    }
+
+    @Override
     @Transactional
     public Integer create(Client client) {
-        log.debug("create({})",client);
+        log.debug("create({})", client);
         return this.clientDao.create(client);
+    }
+
+    @Override
+    public Integer update(Client client) {
+        log.debug("update({})", client);
+        return this.clientDao.update(client);
+    }
+
+    @Override
+    public Integer delete(Integer clientId) {
+        log.debug("delete cli");
+        return this.clientDao.delete(clientId);
     }
 
     @Override

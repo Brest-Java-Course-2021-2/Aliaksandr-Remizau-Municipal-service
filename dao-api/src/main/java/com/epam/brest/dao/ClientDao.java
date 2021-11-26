@@ -13,37 +13,41 @@ public interface ClientDao {
      *
      * @return clients list.
      */
-
     List<Client> findAll();
+
+    /**
+     * Get client by Id.
+     *
+     * @return Client  with personal Id.
+     */
+    Client getClientById(Integer clientId);
 
     /**
      * Create client.
      *
-     * @param  Client client.
-     *
      * @return Integer  number of create client.
      */
-
     Integer create(Client client);
 
     /**
      * Update client.
      *
-     * @param  Client client.
-     *
      * @return Integer  number of update client.
      */
-
     Integer update(Client client);
+
     /**
      * Delete Client with specific Id
      *
-     * @param  Integer  client Id.
-     *
      * @return Integer  number of delete client.
      */
-
     Integer delete(Integer clientId);
+
+    /**
+     * Count Client.
+     *
+     * @return Integer  number of  client.
+     */
 
     Integer count();
 }

@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-jdbc-conf.xml"})
@@ -51,6 +53,43 @@ class ClientDaoJDBCImplIT {
             clientDaoJDBC.create(client);
             clientDaoJDBC.create(client);
         });
+    }
+
+    @Test
+    void getClientById() {
+        log.debug("getClientById()");
+        List<Client> clients = clientDaoJDBC.findAll();
+        if (clients.size() == 0) {
+            clientDaoJDBC.create(new Client("Tested Client"));
+            clients = clientDaoJDBC.findAll();
+        }
+        Client clientSrc = clients.get(0);
+        Client clientDSt = clientDaoJDBC.getClientById(clientSrc.getClientId());
+        assertEquals(clientSrc.getClientName(), clientDSt.getClientName());
+
+    }
+
+    @Test
+    void updateClient() {
+        log.debug("updateClient()");
+        List<Client> clients = clientDaoJDBC.findAll();
+        if (clients.size() == 0) {
+            clientDaoJDBC.create(new Client("Tested Client"));
+            clients = clientDaoJDBC.findAll();
+        }
+        Client clientSrc = clients.get(0);
+        Client clientDst = clientDaoJDBC.getClientById(clientSrc.getClientId());
+        assertEquals(clientSrc.getClientName(), clientDst.getClientName());
+
+    }
+
+    @Test
+    void deleteClient() {
+        clientDaoJDBC.create(new Client("Tested Client"));
+        List<Client> clients = clientDaoJDBC.findAll();
+
+        clientDaoJDBC.delete(clients.get(clients.size() - 1).getClientId());
+        assertEquals(clients.size() - 1, clientDaoJDBC.findAll().size());
     }
 
     @Test

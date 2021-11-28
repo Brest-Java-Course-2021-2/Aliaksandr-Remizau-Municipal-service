@@ -39,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Integer delete(Integer clientId) {
-        log.debug("delete cli");
+        log.debug("delete client id:{}",clientId);
         return this.clientDao.delete(clientId);
     }
 

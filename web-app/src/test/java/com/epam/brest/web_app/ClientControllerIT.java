@@ -5,6 +5,7 @@ import com.epam.brest.service.ClientService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,16 +72,16 @@ class ClientControllerIT {
                         allOf(
                                 hasProperty("clientId", is(2)),
                                 hasProperty("clientName", is("Orlov Petr Ivanovich")),
-                                hasProperty("numberOfRepairs", is(2))
+                                hasProperty("numberOfRepairs", is(3))
                         )
                 )))
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(3)),
                                 hasProperty("clientName", is("Borodach Michail Ivanovich")),
-                                hasProperty("numberOfRepairs", is(1))
+                                hasProperty("numberOfRepairs", is((0))
                         )
-                )));
+                ))));
     }
     @Test
     void shouldAddClient() throws Exception{
@@ -107,8 +108,8 @@ class ClientControllerIT {
     public void shouldOpenEditClientPageById() throws Exception {
         log.debug("shouldOpenEditClientPageById()");
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/client/1")
-                ).andDo(MockMvcResultHandlers.print())
+                        MockMvcRequestBuilders.get("/client/1"))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("client"))
@@ -125,12 +126,26 @@ class ClientControllerIT {
                         MockMvcRequestBuilders.post("/client/1")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("clientId", "1")
-                                .param("clientName", testName)
-                ).andExpect(status().isFound())
+                                .param("clientName", testName))
+                .andExpect(status().isFound())
                 .andExpect(view().name("redirect:/clients"))
                 .andExpect(redirectedUrl("/clients"));
         Client client = clientService.getClientById(1);
         assertNotNull(client);
         assertEquals(testName, client.getClientName());
+    }
+    @Test
+    public void shouldDeleteClient() throws Exception {
+
+        Integer countBefore = clientService.count();
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/client/3/delete"))
+                .andExpect(status().isFound())
+                .andExpect(view().name("redirect:/clients"))
+                .andExpect(redirectedUrl("/clients"));
+        // verify database size
+        Integer countAfter = clientService.count();
+        Assertions.assertEquals(countBefore - 1, countAfter);
     }
 }

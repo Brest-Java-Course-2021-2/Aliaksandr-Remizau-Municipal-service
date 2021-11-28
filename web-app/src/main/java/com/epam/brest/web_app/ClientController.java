@@ -87,5 +87,17 @@ public class ClientController {
         this.clientService.update(client);
         return "redirect:/clients";
     }
+    /**
+     * Delete client.
+     *
+     * @return view name
+     */
+    @GetMapping(value = "/client/{id}/delete")
+    public final String deleteClientById(@PathVariable Integer id, Model model) {
+
+        log.debug("delete({},{})", id, model);
+        clientService.delete(id);
+        return "redirect:/clients";
+    }
 }
 

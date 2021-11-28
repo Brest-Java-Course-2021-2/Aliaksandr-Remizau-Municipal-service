@@ -16,10 +16,36 @@
     <mvc:annotation-driven/>
 
     <!-- Component scan for @Controller, @Service... annotations -->
-    <context:component-scan base-package="com.epam.brest*"/>
+    <context:component-scan base-package="com.epam.brest.*"/>
 
     <import resource="classpath*:test-db.xml"/>
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="clientDtoDao" class="com.epam.brest.dao.ClientDtoDaoJDBC">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="clientDtoService" class="com.epam.brest.service.impl.ClientDtoServiceImpl">
+        <constructor-arg name="clientDtoDao" ref="clientDtoDao"/>
+    </bean>
+    <bean id="clientDao" class="com.epam.brest.dao.ClientDaoJDBCImpl">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="clientService" class="com.epam.brest.service.impl.ClientServiceImpl">
+        <constructor-arg name="clientDao" ref="clientDao"/>
+    </bean>
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:test-db.properties</value>
+                <value>classpath*:sql-client.properties</value>
+            </list>
+        </property>
+    </bean>
     <!-- Thymeleaf Template Resolver -->
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">

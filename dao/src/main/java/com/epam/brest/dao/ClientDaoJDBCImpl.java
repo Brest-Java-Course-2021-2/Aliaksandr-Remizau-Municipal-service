@@ -3,6 +3,7 @@ package com.epam.brest.dao;
 import com.epam.brest.model.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,7 +15,6 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 
 
 public class ClientDaoJDBCImpl implements ClientDao {
@@ -23,21 +23,26 @@ public class ClientDaoJDBCImpl implements ClientDao {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final String SQL_ALL_CLIENTS = "select c.client_id, c.client_name from client c order by c.client_name";
-    private final String SQL_CLIENT_BY_ID = "select c.client_id, c.client_name from client c " +
-            " where client_id = :clientId";
-    private final String SQL_CREATE_CLIENT = "insert into client(client_name) values(:clientName)";
-    private final String SQL_CHECK_UNIQUE_CLIENT_NAME = "select count(c.client_name) " +
-            "from client c where lower(c.client_name) = lower(:clientName)";
-    private final String SQL_UPDATE_CLIENT_NAME = "update client set client_name = :clientName " +
-            "where client_id = :clientId";
-    private final String SQL_DELETE_CLIENT_BY_ID = "delete from client where client_id = :clientId";
-    private final String SQL_COUNT_CLIENT = "select count(*) from client";
+    @Value("${SQL_ALL_CLIENTS}")
+    private  String sqlAllClients;
 
-    @Deprecated
-    public ClientDaoJDBCImpl(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
+    @Value("${SQL_CLIENT_BY_ID}")
+    private  String sqlClientById;
+
+    @Value("${SQL_CREATE_CLIENT}")
+    private  String sqlCreateClient;
+
+    @Value("${SQL_CHECK_UNIQUE_CLIENT_NAME}")
+    private  String sqlCheckUniqueClientName;
+
+    @Value("${SQL_UPDATE_CLIENT_NAME}")
+    private  String sqlUpdateClientName;
+
+    @Value("${SQL_DELETE_CLIENT_BY_ID}")
+    private  String sqlDeleteClientById;
+
+    @Value("${SQL_COUNT_CLIENT}")
+    private  String sqlCountClient;
 
     public ClientDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -46,14 +51,14 @@ public class ClientDaoJDBCImpl implements ClientDao {
     @Override
     public List<Client> findAll() {
         log.debug("Execute method: findAll");
-        return namedParameterJdbcTemplate.query(SQL_ALL_CLIENTS, new ClientRowMapper());
+        return namedParameterJdbcTemplate.query(sqlAllClients, new ClientRowMapper());
     }
 
     @Override
     public Client getClientById(Integer clientId) {
         log.debug("getClientById id:{}", clientId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientId", clientId);
-        return namedParameterJdbcTemplate.queryForObject(SQL_CLIENT_BY_ID, sqlParameterSource, new ClientRowMapper() {
+        return namedParameterJdbcTemplate.queryForObject(sqlClientById, sqlParameterSource, new ClientRowMapper() {
         });
     }
 
@@ -66,14 +71,14 @@ public class ClientDaoJDBCImpl implements ClientDao {
         }
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", client.getClientName().toUpperCase());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(SQL_CREATE_CLIENT, sqlParameterSource, keyHolder);
+        namedParameterJdbcTemplate.update(sqlCreateClient, sqlParameterSource, keyHolder);
         return (Integer) keyHolder.getKey();
     }
 
     private boolean isClientUnique(String clientName) {
         log.debug("Check clientName: {} on unique", clientName);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", clientName);
-        return namedParameterJdbcTemplate.queryForObject(SQL_CHECK_UNIQUE_CLIENT_NAME, sqlParameterSource, Integer.class) == 0;
+        return namedParameterJdbcTemplate.queryForObject(sqlCheckUniqueClientName, sqlParameterSource, Integer.class) == 0;
     }
 
     @Override
@@ -81,20 +86,20 @@ public class ClientDaoJDBCImpl implements ClientDao {
         log.debug("Update client :{}", client);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", client.getClientName())
                 .addValue("clientId", client.getClientId());
-        return namedParameterJdbcTemplate.update(SQL_UPDATE_CLIENT_NAME, sqlParameterSource);
+        return namedParameterJdbcTemplate.update(sqlUpdateClientName, sqlParameterSource);
     }
 
     @Override
     public Integer delete(Integer clientId) {
         log.debug("delete client id:{}", clientId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientId", clientId);
-        return namedParameterJdbcTemplate.update(SQL_DELETE_CLIENT_BY_ID, sqlParameterSource);
+        return namedParameterJdbcTemplate.update(sqlDeleteClientById, sqlParameterSource);
     }
 
     @Override
     public Integer count() {
         log.debug("count();");
-        return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_CLIENT,new MapSqlParameterSource(),Integer.class);
+        return namedParameterJdbcTemplate.queryForObject(sqlCountClient,new MapSqlParameterSource(),Integer.class);
     }
 
     private class ClientRowMapper implements RowMapper<Client>{

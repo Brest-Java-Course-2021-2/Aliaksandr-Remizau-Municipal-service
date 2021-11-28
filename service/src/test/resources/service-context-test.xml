@@ -22,4 +22,12 @@
     <bean id="clientService" class="com.epam.brest.service.impl.ClientServiceImpl">
         <constructor-arg name="clientDao" ref="clientDao"/>
     </bean>
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:test-db.properties</value>
+                <value>classpath*:sql-client.properties</value>
+            </list>
+        </property>
+    </bean>
 </beans>

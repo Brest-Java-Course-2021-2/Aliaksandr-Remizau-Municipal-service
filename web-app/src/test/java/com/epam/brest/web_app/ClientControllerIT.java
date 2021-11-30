@@ -103,6 +103,24 @@ class ClientControllerIT {
         //VERIFY
         assertEquals((int) clientSizeBefore, clientService.count() - 1);
     }
+    @Test
+    void shouldFailAddClientOnEmptyName() throws Exception {
+        // WHEN
+        Client client = new Client("");
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/client")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("clientName", client.getClientName())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("client"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "client", "clientName"
+                        )
+                );
+    }
 
     @Test
     public void shouldOpenEditClientPageById() throws Exception {

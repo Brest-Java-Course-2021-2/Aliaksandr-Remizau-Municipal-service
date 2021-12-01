@@ -13,3 +13,14 @@ This web application for record-keeping  tenants' requests for repairs .
 ## Build application:
 ```
 mvn clean install
+```
+## Run integration tests:
+```
+mvn clean verify
+```
+
+## Run project information ( coverage, dependency, etc. ):
+```
+mvn site
+mvn site:stage
+open in browser: ${project}/target/staging/index.html

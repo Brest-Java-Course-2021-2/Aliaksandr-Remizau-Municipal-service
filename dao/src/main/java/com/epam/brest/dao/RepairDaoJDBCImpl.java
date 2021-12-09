@@ -1,6 +1,7 @@
 package com.epam.brest.dao;
 
 import com.epam.brest.model.Repair;
+import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,16 +50,27 @@ public class RepairDaoJDBCImpl implements RepairDao{
         return null;
     }
 
+    @Override
+    public Integer count() {
+        return null;
+    }
+
     private class RepairRowMapper implements RowMapper<Repair> {
         @Override
         public Repair mapRow(ResultSet resultSet, int i) throws SQLException {
+
             log.debug("Start : mapRow()");
+
             Repair repair = new Repair();
+
             repair.setRepairId(resultSet.getInt("repair_id"));
             repair.setRepairType(RepairType.valueOf(resultSet.getString("repair_type")));
-            repair.
+            repair.setAddress(resultSet.getString("address"));
+            repair.setDifficultyLevel(LevelOfDifficulty.valueOf(resultSet.getString("difficulty_level")));
+            repair.setPreferenceDate(resultSet.getDate("preference_date").toLocalDate());
+            repair.setClientId(resultSet.getInt("client_id"));
+
             return repair;
         }
     }
-
 }

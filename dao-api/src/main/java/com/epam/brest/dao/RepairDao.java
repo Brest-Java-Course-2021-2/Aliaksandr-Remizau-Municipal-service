@@ -43,5 +43,13 @@ public interface RepairDao {
      * @return Integer  number of delete repair.
      */
     Integer delete(Integer repairId);
+
+    /**
+     * Count Repair.
+     *
+     * @return Integer  number of  repair.
+     */
+
+    Integer count();
 }
 

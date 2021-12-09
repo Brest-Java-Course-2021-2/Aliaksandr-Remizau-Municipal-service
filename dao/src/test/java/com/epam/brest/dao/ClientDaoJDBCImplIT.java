@@ -27,13 +27,13 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void findAll() {
+    void testFindAll() {
         log.debug("Execute test : findAll()");
         assertNotNull(clientDaoJDBC);
         assertNotNull(clientDaoJDBC.findAll());
     }
     @Test
-    void create(){
+    void testCreate(){
         log.debug("Execute test: create(");
         assertNotNull(clientDaoJDBC);
         int clientSizeBefore = clientDaoJDBC.count();
@@ -44,7 +44,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void tryToCreateEqualsClient() {
+    void testTryToCreateEqualsClient() {
         log.debug("Execute test: tryToCreateEqualsClient()");
         assertNotNull(clientDaoJDBC);
         Client client = new Client("Borisuk Oleg Aleksandrovich");
@@ -55,7 +55,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void getClientById() {
+    void testGetClientById() {
         log.debug("getClientById()");
         List<Client> clients = clientDaoJDBC.findAll();
         if (clients.size() == 0) {
@@ -69,7 +69,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void updateClient() {
+    void testUpdateClient() {
         log.debug("updateClient()");
         List<Client> clients = clientDaoJDBC.findAll();
         if (clients.size() == 0) {
@@ -83,7 +83,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void deleteClient() {
+    void testDeleteClient() {
         clientDaoJDBC.create(new Client("Tested Client"));
         List<Client> clients = clientDaoJDBC.findAll();
 
@@ -92,7 +92,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void shouldCount() {
+    void testShouldCount() {
         assertNotNull(clientDaoJDBC);
         Integer quantity = clientDaoJDBC.count();
         assertNotNull(quantity);

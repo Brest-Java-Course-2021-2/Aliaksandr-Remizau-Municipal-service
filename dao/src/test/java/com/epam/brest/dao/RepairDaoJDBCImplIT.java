@@ -26,7 +26,7 @@ class RepairDaoJDBCImplIT {
     }
 
     @Test
-    void findAll() {
+    void testFindAll() {
         log.debug("Execute test : findAll()");
         assertNotNull(repairDaoJDBC);
         assertNotNull(repairDaoJDBC.findAll());
@@ -34,18 +34,21 @@ class RepairDaoJDBCImplIT {
     }
 
     @Test
-    void getRepairById() {
+    void testGetRepairById() {
     }
 
     @Test
-    void create() {
+    void testCreate() {
     }
 
     @Test
-    void update() {
+    void testUpdate() {
     }
 
     @Test
-    void delete() {
+    void testdelete() {
     }
+
+    @Test
+    void testCount(){}
 }

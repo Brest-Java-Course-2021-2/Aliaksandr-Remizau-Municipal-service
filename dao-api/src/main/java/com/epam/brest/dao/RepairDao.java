@@ -1,8 +1,7 @@
 package com.epam.brest.dao;
 
-import com.epam.brest.model.Client;
-import com.epam.brest.model.Repair;
 
+import com.epam.brest.model.Repair;
 import java.util.List;
 
 /**
@@ -49,7 +48,6 @@ public interface RepairDao {
      *
      * @return Integer  number of  repair.
      */
-
     Integer count();
 }
 

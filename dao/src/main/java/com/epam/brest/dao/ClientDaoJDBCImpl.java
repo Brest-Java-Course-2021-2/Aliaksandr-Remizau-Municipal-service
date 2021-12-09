@@ -1,5 +1,6 @@
 package com.epam.brest.dao;
 
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import javax.sql.DataSource;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -67,7 +68,7 @@ public class ClientDaoJDBCImpl implements ClientDao {
         log.debug("Create client : {}", client);
         if (!isClientUnique(client.getClientName())) {
             log.warn("Client with the same name {} already exists.", client.getClientName());
-            throw new IllegalArgumentException("Client with the same name already exists in DB.");
+            throw new DuplicateEntityException("Client with the same name already exists in DB.");
         }
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", client.getClientName().toUpperCase());
         KeyHolder keyHolder = new GeneratedKeyHolder();

@@ -1,12 +1,19 @@
 package com.epam.brest.dao;
 
+
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Repair;
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,6 +26,14 @@ public class RepairDaoJDBCImpl implements RepairDao{
 
     private final String SQL_ALL_REPAIRS =
             "select * from repair r order by r.preference_date";
+    private final String SQL_GET_REPAIR_BY_ID =
+            "select r.repair_id, r.repair_type,r.address,r.difficulty_level,r.preference_date,r.client_id from repair r where r.repair_id = :repairId";
+    private final String SQL_CREATE_REPAIR =
+            "insert into repair(repair_type, address, difficulty_level, preference_date, client_id) values(:repairType, :address, :difficultyLevel, :preferenceDate, :clientId) ";
+    private final String SQL_CHECK_UNIQUE_REPAIR =
+            "select count(r.repair_id) from repair r where r.repair_type = :repairType AND r.address = :address AND r.difficulty_level = :difficultyLevel AND r.preference_date = :preferenceDate";
+    private final String SQL_COUNT_REPAIRS =
+            "select count(*) from repair";
 
     public RepairDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -26,18 +41,46 @@ public class RepairDaoJDBCImpl implements RepairDao{
 
     @Override
     public List<Repair> findAll() {
+
         log.debug("Execute findAll()");
         return namedParameterJdbcTemplate.query(SQL_ALL_REPAIRS,new RepairRowMapper());
     }
 
     @Override
     public Repair getRepairById(Integer repairId) {
-        return null;
+
+        log.debug("getRepairById({})",repairId);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("repairId",repairId);
+        return namedParameterJdbcTemplate.queryForObject(SQL_GET_REPAIR_BY_ID,sqlParameterSource,new RepairRowMapper());
     }
 
     @Override
     public Integer create(Repair repair) {
-        return null;
+        log.debug("create({})",repair);
+        if (!isRepairUnique(repair)) {
+            log.warn("Repair {} with equals parameters already exists.", repair);
+            throw new DuplicateEntityException("Repair with equals parameters already exists in DB.");
+        }
+        SqlParameterSource sqlParameterSource =
+                new MapSqlParameterSource("repairType", repair.getRepairType())
+                .addValue("address", repair.getAddress())
+                .addValue("difficultyLevel", repair.getDifficultyLevel())
+                .addValue("preferenceDate",repair.getPreferenceDate())
+                .addValue("clientId", repair.getClientId());;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(SQL_CREATE_REPAIR, sqlParameterSource, keyHolder);
+        return (Integer) keyHolder.getKey();
+
+    }
+    private boolean isRepairUnique(Repair repair){
+
+        log.debug("isRepairUnique({})",repair);
+        SqlParameterSource sqlParameterSource =
+                new MapSqlParameterSource("repairType", repair.getRepairType())
+                        .addValue("address", repair.getAddress())
+                        .addValue("difficultyLevel", repair.getDifficultyLevel())
+                        .addValue("preferenceDate",repair.getPreferenceDate());
+        return namedParameterJdbcTemplate.queryForObject(SQL_CHECK_UNIQUE_REPAIR, sqlParameterSource, Integer.class) == 0;
     }
 
     @Override
@@ -52,7 +95,10 @@ public class RepairDaoJDBCImpl implements RepairDao{
 
     @Override
     public Integer count() {
-        return null;
+
+        log.debug("count()");
+
+        return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_REPAIRS,new MapSqlParameterSource(),Integer.class);
     }
 
     private class RepairRowMapper implements RowMapper<Repair> {

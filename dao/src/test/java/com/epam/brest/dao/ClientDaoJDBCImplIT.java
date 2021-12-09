@@ -1,5 +1,6 @@
 package com.epam.brest.dao;
 
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +49,7 @@ class ClientDaoJDBCImplIT {
         log.debug("Execute test: tryToCreateEqualsClient()");
         assertNotNull(clientDaoJDBC);
         Client client = new Client("Borisuk Oleg Aleksandrovich");
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(DuplicateEntityException.class, () -> {
             clientDaoJDBC.create(client);
             clientDaoJDBC.create(client);
         });

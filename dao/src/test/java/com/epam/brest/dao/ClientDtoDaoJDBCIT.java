@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Rollback
 class ClientDtoDaoJDBCIT {
+
     private final Logger log = LogManager.getLogger(ClientDtoDaoJDBCIT.class);
 
     private final ClientDtoDaoJDBCImpl clientDtoDaoJDBC;

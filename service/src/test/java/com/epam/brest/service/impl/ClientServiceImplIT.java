@@ -1,5 +1,6 @@
 package com.epam.brest.service.impl;
 
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Client;
 import com.epam.brest.service.ClientService;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +44,7 @@ class ClientServiceImplIT {
         log.debug("Execute test: tryToCreateEqualsClient()");
         assertNotNull(clientService);
         Client client = new Client("Borisuk Oleg Aleksandrovich");
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(DuplicateEntityException.class, () -> {
             clientService.create(client);
             clientService.create(client);
         });

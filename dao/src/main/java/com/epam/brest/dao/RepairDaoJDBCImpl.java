@@ -16,6 +16,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class RepairDaoJDBCImpl implements RepairDao{
@@ -27,11 +28,11 @@ public class RepairDaoJDBCImpl implements RepairDao{
     private final String SQL_ALL_REPAIRS =
             "select * from repair r order by r.preference_date";
     private final String SQL_GET_REPAIR_BY_ID =
-            "select r.repair_id, r.repair_type,r.address,r.difficulty_level,r.preference_date,r.client_id from repair r where r.repair_id = :repairId";
+            "select r.repair_id, r.repair_type, r.address, r.difficulty_level, r.preference_date, r.client_id from repair r where r.repair_id = :repairId";
     private final String SQL_CREATE_REPAIR =
-            "insert into repair(repair_type, address, difficulty_level, preference_date, client_id) values(:repairType, :address, :difficultyLevel, :preferenceDate, :clientId) ";
+            "insert into repair(repair_type, address, difficulty_level, preference_date, client_id) values(:repairType, :address, :difficultyLevel, :preferenceDate, :clientId)";
     private final String SQL_CHECK_UNIQUE_REPAIR =
-            "select count(r.repair_id) from repair r where r.repair_type = :repairType AND r.address = :address AND r.difficulty_level = :difficultyLevel AND r.preference_date = :preferenceDate";
+            "select count(r.address) from repair r where r.repair_type = :repairType AND r.address = :address AND r.difficulty_level = :difficultyLevel AND r.preference_date = :preferenceDate";
     private final String SQL_COUNT_REPAIRS =
             "select count(*) from repair";
 
@@ -62,9 +63,9 @@ public class RepairDaoJDBCImpl implements RepairDao{
             throw new DuplicateEntityException("Repair with equals parameters already exists in DB.");
         }
         SqlParameterSource sqlParameterSource =
-                new MapSqlParameterSource("repairType", repair.getRepairType())
+                new MapSqlParameterSource("repairType",String.valueOf( repair.getRepairType()))
                 .addValue("address", repair.getAddress())
-                .addValue("difficultyLevel", repair.getDifficultyLevel())
+                .addValue("difficultyLevel",String.valueOf( repair.getDifficultyLevel()))
                 .addValue("preferenceDate",repair.getPreferenceDate())
                 .addValue("clientId", repair.getClientId());;
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -76,9 +77,10 @@ public class RepairDaoJDBCImpl implements RepairDao{
 
         log.debug("isRepairUnique({})",repair);
         SqlParameterSource sqlParameterSource =
-                new MapSqlParameterSource("repairType", repair.getRepairType())
+                new MapSqlParameterSource("repairId",repair.getRepairId())
+                        .addValue("repairType",String.valueOf (repair.getRepairType()))
                         .addValue("address", repair.getAddress())
-                        .addValue("difficultyLevel", repair.getDifficultyLevel())
+                        .addValue("difficultyLevel",String.valueOf( repair.getDifficultyLevel()))
                         .addValue("preferenceDate",repair.getPreferenceDate());
         return namedParameterJdbcTemplate.queryForObject(SQL_CHECK_UNIQUE_REPAIR, sqlParameterSource, Integer.class) == 0;
     }
@@ -99,6 +101,11 @@ public class RepairDaoJDBCImpl implements RepairDao{
         log.debug("count()");
 
         return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_REPAIRS,new MapSqlParameterSource(),Integer.class);
+    }
+
+    @Override
+    public List<Repair> filterRepairByPreferenceDate(LocalDate startLimitDate, LocalDate endLimitDate) {
+        return null;
     }
 
     private class RepairRowMapper implements RowMapper<Repair> {

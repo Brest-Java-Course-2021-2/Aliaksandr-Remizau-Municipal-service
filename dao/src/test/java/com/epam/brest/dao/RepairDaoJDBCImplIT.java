@@ -1,6 +1,6 @@
 package com.epam.brest.dao;
 
-
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Repair;
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
@@ -85,7 +85,7 @@ class RepairDaoJDBCImplIT {
         assertNotNull(repairDaoJDBC);
         Repair repair = new Repair(RepairType.ELECTRIC,"MOSKOVSKAYA 250-13", LevelOfDifficulty.EASY, LocalDate.of(2021,12,25),1);
 
-        assertThrows(DuplicateRequestException.class, () -> {
+        assertThrows(DuplicateEntityException.class, () -> {
             repairDaoJDBC.create(repair);
             repairDaoJDBC.create(repair);
         });

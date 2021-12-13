@@ -2,6 +2,8 @@ package com.epam.brest.dao;
 
 
 import com.epam.brest.model.Repair;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -49,5 +51,13 @@ public interface RepairDao {
      * @return Integer  number of  repair.
      */
     Integer count();
+
+    /**
+     * Filter repairs by dates.
+     * @param startLimitDate - start  date of search limit.
+     * @param endLimitDate - end date of search limit.
+     * @return collection of repairs.
+     */
+    List<Repair> filterRepairByPreferenceDate(LocalDate startLimitDate, LocalDate endLimitDate);
 }
 

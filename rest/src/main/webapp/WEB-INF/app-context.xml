@@ -23,7 +23,7 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="clientDtoDao" class="com.epam.brest.dao.ClientDtoDaoJDBC">
+    <bean id="clientDtoDao" class="com.epam.brest.dao.ClientDtoDaoJDBCImpl">
         <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 

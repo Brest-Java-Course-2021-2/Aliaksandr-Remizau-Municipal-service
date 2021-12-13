@@ -1,5 +1,6 @@
 package com.epam.brest.dao;
 
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,10 +11,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-jdbc-conf.xml"})
 @Transactional
@@ -21,20 +21,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class ClientDaoJDBCImplIT {
     private final Logger log = LogManager.getLogger(ClientDaoJDBCImplIT.class);
 
-    ClientDaoJDBCImpl clientDaoJDBC;
+    private final ClientDaoJDBCImpl clientDaoJDBC;
 
     public ClientDaoJDBCImplIT(@Autowired ClientDao clientDaoJDBC) {
         this.clientDaoJDBC = (ClientDaoJDBCImpl) clientDaoJDBC;
     }
 
     @Test
-    void findAll() {
+    void testFindAll() {
         log.debug("Execute test : findAll()");
         assertNotNull(clientDaoJDBC);
         assertNotNull(clientDaoJDBC.findAll());
     }
     @Test
-    void create(){
+    void testCreate(){
         log.debug("Execute test: create(");
         assertNotNull(clientDaoJDBC);
         int clientSizeBefore = clientDaoJDBC.count();
@@ -45,18 +45,18 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void tryToCreateEqualsClient() {
+    void testTryToCreateEqualsClient() {
         log.debug("Execute test: tryToCreateEqualsClient()");
         assertNotNull(clientDaoJDBC);
         Client client = new Client("Borisuk Oleg Aleksandrovich");
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(DuplicateEntityException.class, () -> {
             clientDaoJDBC.create(client);
             clientDaoJDBC.create(client);
         });
     }
 
     @Test
-    void getClientById() {
+    void testGetClientById() {
         log.debug("getClientById()");
         List<Client> clients = clientDaoJDBC.findAll();
         if (clients.size() == 0) {
@@ -70,7 +70,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void updateClient() {
+    void testUpdateClient() {
         log.debug("updateClient()");
         List<Client> clients = clientDaoJDBC.findAll();
         if (clients.size() == 0) {
@@ -84,7 +84,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void deleteClient() {
+    void testDeleteClient() {
         clientDaoJDBC.create(new Client("Tested Client"));
         List<Client> clients = clientDaoJDBC.findAll();
 
@@ -93,7 +93,7 @@ class ClientDaoJDBCImplIT {
     }
 
     @Test
-    void shouldCount() {
+    void testShouldCount() {
         assertNotNull(clientDaoJDBC);
         Integer quantity = clientDaoJDBC.count();
         assertNotNull(quantity);

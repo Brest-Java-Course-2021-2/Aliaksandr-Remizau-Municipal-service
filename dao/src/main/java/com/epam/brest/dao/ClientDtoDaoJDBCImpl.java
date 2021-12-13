@@ -6,15 +6,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-
 import java.util.List;
 
 /**
  *  Client DTO DAO implementation.
  */
-
-public class ClientDtoDaoJDBC implements ClientDtoDao{
-    private final Logger log = LogManager.getLogger(ClientDtoDaoJDBC.class);
+public class ClientDtoDaoJDBCImpl implements ClientDtoDao{
+    private final Logger log = LogManager.getLogger(ClientDtoDaoJDBCImpl.class);
     /**
      * NamedParameterJdbcTemplate.
      */
@@ -26,10 +24,20 @@ public class ClientDtoDaoJDBC implements ClientDtoDao{
     private String findAllWithRepairsSql;
 
 
-    public ClientDtoDaoJDBC(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    /**
+     * Constructor with  NamedParameterJdbcTemplate.
+     *
+     * @param namedParameterJdbcTemplate
+     */
+    public ClientDtoDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     * Get all clients with number of their repairs.
+     *
+     * @return clients list.
+     */
     @Override
     public List<ClientDto> findAllWithRepairs() {
         log.debug("Start: findAllWithRepairs()");

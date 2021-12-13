@@ -4,7 +4,6 @@ import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Repair;
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
-import com.sun.jdi.request.DuplicateRequestException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -93,10 +92,85 @@ class RepairDaoJDBCImplIT {
 
     @Test
     void testUpdate() {
+
+        log.debug("testUpdate()");
+        List<Repair> repairs = repairDaoJDBC.findAll();
+        if(repairs.isEmpty()){
+            Repair newRepair = new Repair();
+            repairDaoJDBC.create(newRepair);
+            repairs = repairDaoJDBC.findAll();
+        }
+        Repair repairSrc = repairs.get(0);
+        repairSrc.setRepairId(1);
+        repairSrc.setRepairType(RepairType.ELECTRIC);
+        repairSrc.setAddress("MOSKOVSKAYA 243-18");
+        repairSrc.setDifficultyLevel(LevelOfDifficulty.MEDIUM);
+        repairSrc.setPreferenceDate(LocalDate.parse("2021-12-31"));
+        repairSrc.setClientId(1);
+        repairDaoJDBC.update(repairSrc);
+
+        Repair repairDst = repairDaoJDBC.getRepairById(repairSrc.getRepairId());
+        assertEquals(repairSrc.getRepairId(), repairDst.getRepairId());
+        assertEquals(repairSrc.getRepairType(),repairDst.getRepairType());
+        assertEquals(repairSrc.getAddress(),repairDst.getAddress());
+        assertEquals(repairSrc.getDifficultyLevel(),repairDst.getDifficultyLevel());
+        assertEquals(repairSrc.getPreferenceDate(),repairDst.getPreferenceDate());
+        assertEquals(repairSrc.getClientId(),repairDst.getClientId());
     }
 
     @Test
     void testDelete() {
+
+        log.debug("testDelete()");
+
+        Repair newRepair = new Repair(RepairType.ELECTRIC,"MOSKOVSKAYA 250-13", LevelOfDifficulty.EASY, LocalDate.of(2021,12,25),1);
+        repairDaoJDBC.create(newRepair);
+
+        assertNotNull(repairDaoJDBC.findAll());
+        List<Repair> repairs = repairDaoJDBC.findAll();
+
+        assertFalse(repairs.isEmpty());
+
+        repairDaoJDBC.delete(repairs.get(repairs.size() - 1).getClientId());
+        assertEquals(repairs.size() - 1, repairDaoJDBC.findAll().size());
+    }
+
+    @Test
+    public void testFilterRepairByPreferenceDateIfDatePresent(){
+        log.debug("testFilterRepairByPreferenceDate()");
+
+        assertNotNull(repairDaoJDBC);
+
+        LocalDate startLimitDate= LocalDate.parse("2021-12-30");
+        LocalDate endLimitDate =  LocalDate.parse("2021-12-31");
+        assertNotNull(repairDaoJDBC.filterRepairByPreferenceDate(startLimitDate,endLimitDate));
+        List<Repair> repairs = repairDaoJDBC.filterRepairByPreferenceDate(startLimitDate,endLimitDate);
+
+        assertFalse(repairs.isEmpty());
+        assertEquals(2,repairs.size());
+    }
+
+    @Test
+    public void testFilterRepairByPreferenceDateIfAllDateIsNull(){
+        List<Repair> repairs = repairDaoJDBC.filterRepairByPreferenceDate(null,null);
+        assertNotNull(repairs);
+        assertEquals(0,repairs.size());
+    }
+
+    @Test
+    public void testFilterRepairByPreferenceDateIfFirstDateIsNull(){
+        LocalDate startLimitDate= LocalDate.parse("2021-12-30");
+        List<Repair> repairs = repairDaoJDBC.filterRepairByPreferenceDate(startLimitDate,null);
+        assertNotNull(repairs);
+        assertEquals(0,repairs.size());
+    }
+
+    @Test
+    public void testFilterRepairByPreferenceDateIfSecondDateIsNull(){
+        LocalDate endLimitDate =  LocalDate.parse("2021-12-31");
+        List<Repair> repairs = repairDaoJDBC.filterRepairByPreferenceDate(null,endLimitDate);
+        assertNotNull(repairs);
+        assertEquals(0,repairs.size());
     }
 
     @Test

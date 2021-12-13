@@ -13,8 +13,8 @@ import java.util.List;
  *  Client DTO DAO implementation.
  */
 
-public class ClientDtoDaoJDBC implements ClientDtoDao{
-    private final Logger log = LogManager.getLogger(ClientDtoDaoJDBC.class);
+public class ClientDtoDaoJDBCImpl implements ClientDtoDao{
+    private final Logger log = LogManager.getLogger(ClientDtoDaoJDBCImpl.class);
     /**
      * NamedParameterJdbcTemplate.
      */
@@ -26,7 +26,7 @@ public class ClientDtoDaoJDBC implements ClientDtoDao{
     private String findAllWithRepairsSql;
 
 
-    public ClientDtoDaoJDBC(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public ClientDtoDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 

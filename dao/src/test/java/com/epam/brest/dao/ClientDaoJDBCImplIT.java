@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ClientDaoJDBCImplIT {
     private final Logger log = LogManager.getLogger(ClientDaoJDBCImplIT.class);
 
-    ClientDaoJDBCImpl clientDaoJDBC;
+    private final ClientDaoJDBCImpl clientDaoJDBC;
 
     public ClientDaoJDBCImplIT(@Autowired ClientDao clientDaoJDBC) {
         this.clientDaoJDBC = (ClientDaoJDBCImpl) clientDaoJDBC;

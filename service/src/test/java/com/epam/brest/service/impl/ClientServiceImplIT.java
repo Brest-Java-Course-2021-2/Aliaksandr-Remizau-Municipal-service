@@ -23,10 +23,6 @@ class ClientServiceImplIT {
     @Autowired
     ClientService clientService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void create() {
         log.debug("Execute test: create(");

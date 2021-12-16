@@ -25,6 +25,7 @@ class ClientServiceImplIT {
     @Autowired
     ClientService clientService;
 
+
     @BeforeEach
     void setUp() {
         assertNotNull(clientService);
@@ -39,6 +40,7 @@ class ClientServiceImplIT {
         assertFalse(clients.isEmpty());
 
     }
+
 
     @Test
     void create() {

@@ -46,7 +46,7 @@ public class ClientDaoJDBCImplTest {
 
     @Test
     public void testFindAll(){
-        log.debug("findAll()");
+        log.debug("testFindAll()");
         String sql = "select";
         ReflectionTestUtils.setField(clientDaoJDBC,"sqlAllClients",sql);
         Client client = new Client();

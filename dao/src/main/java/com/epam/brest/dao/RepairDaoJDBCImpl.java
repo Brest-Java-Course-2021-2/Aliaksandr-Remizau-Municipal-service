@@ -112,8 +112,7 @@ public class RepairDaoJDBCImpl implements RepairDao{
             throw new DuplicateEntityException("Repair with equals parameters already exists in DB.");
         }
         SqlParameterSource sqlParameterSource =
-                new MapSqlParameterSource("repairId",repair.getRepairId())
-                        .addValue("repairType",String.valueOf (repair.getRepairType()))
+                new MapSqlParameterSource("repairType",String.valueOf (repair.getRepairType()))
                         .addValue("address", repair.getAddress())
                         .addValue("difficultyLevel",String.valueOf( repair.getDifficultyLevel()))
                         .addValue("preferenceDate",repair.getPreferenceDate())

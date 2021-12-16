@@ -27,7 +27,7 @@ public interface ClientDao {
      * Create client.
      *
      * @param client
-     * @return Integer  number of create client.
+     * @return Integer  ID of create client.
      */
     Integer create(Client client);
 

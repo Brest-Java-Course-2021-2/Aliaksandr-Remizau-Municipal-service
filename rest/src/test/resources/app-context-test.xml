@@ -37,6 +37,13 @@
     <bean id="clientService" class="com.epam.brest.service.impl.ClientServiceImpl">
         <constructor-arg name="clientDao" ref="clientDao"/>
     </bean>
+    <bean id="repairDao" class="com.epam.brest.dao.RepairDaoJDBCImpl">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="repairService" class="com.epam.brest.service.impl.RepairServiceImpl">
+        <constructor-arg name="repairDao" ref="repairDao"/>
+    </bean>
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>

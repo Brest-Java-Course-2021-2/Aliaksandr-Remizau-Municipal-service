@@ -1,11 +1,10 @@
 package com.epam.brest.service;
 
 import com.epam.brest.model.dto.ClientDto;
-
 import java.util.List;
 
 /**
- * ClientDto DAO Interface.
+ * ClientDto Service Interface.
  */
 public interface ClientDtoService {
     /**

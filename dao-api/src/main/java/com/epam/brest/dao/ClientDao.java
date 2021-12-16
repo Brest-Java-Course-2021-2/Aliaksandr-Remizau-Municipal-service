@@ -18,6 +18,7 @@ public interface ClientDao {
     /**
      * Get client by Id.
      *
+     * @param clientId ID of client
      * @return Client  with personal Id.
      */
     Client getClientById(Integer clientId);
@@ -25,6 +26,7 @@ public interface ClientDao {
     /**
      * Create client.
      *
+     * @param client
      * @return Integer  number of create client.
      */
     Integer create(Client client);
@@ -32,6 +34,7 @@ public interface ClientDao {
     /**
      * Update client.
      *
+     * @param client
      * @return Integer  number of update client.
      */
     Integer update(Client client);
@@ -39,6 +42,7 @@ public interface ClientDao {
     /**
      * Delete Client with specific Id
      *
+     * @param clientId
      * @return Integer  number of delete client.
      */
     Integer delete(Integer clientId);

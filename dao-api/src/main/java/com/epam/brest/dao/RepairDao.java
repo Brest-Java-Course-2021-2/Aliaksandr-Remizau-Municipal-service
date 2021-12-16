@@ -19,14 +19,14 @@ public interface RepairDao {
 
     /**
      * Get repair by Id.
-     *
+     * @param repairId
      * @return Repair  with personal Id.
      */
     Repair getRepairById(Integer repairId);
 
     /**
      * Create repair.
-     *
+     * @param repair
      * @return Integer  number of created repair.
      */
     Integer create(Repair repair);
@@ -34,6 +34,7 @@ public interface RepairDao {
     /**
      * Update repair.
      *
+     * @param  repair
      * @return Integer  number of update repair.
      */
     Integer update(Repair repair);
@@ -41,6 +42,7 @@ public interface RepairDao {
     /**
      * Delete Repair with specific Id
      *
+     * @param repairId Id of repair
      * @return Integer  number of delete repair.
      */
     Integer delete(Integer repairId);

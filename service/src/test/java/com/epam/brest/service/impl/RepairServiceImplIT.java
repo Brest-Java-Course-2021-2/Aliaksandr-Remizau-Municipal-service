@@ -60,23 +60,60 @@ class RepairServiceImplIT {
     }
 
     @Test
-    void create() {
+    void testCreate() {
+        log.debug("testCreate()");
+        Integer sizeBefore = repairService.count();
+        Integer testedRepairId = repairService.create(testedRepair);
+        assertNotNull(testedRepairId);
+        assertEquals(sizeBefore,repairService.count() - 1);
 
     }
 
     @Test
-    void update() {
+    void testUpdate() {
+        log.debug("testUpdate()");
+        Integer testedRepairId = 2;
+        Repair repairSrc = repairService.getRepairById(testedRepairId);
+        repairSrc.setAddress(repairSrc.getAddress() + "test");
+        repairSrc.setPreferenceDate(repairSrc.getPreferenceDate().minusDays(1));
+        repairSrc.setClientId(repairSrc.getClientId() + 1);
+
+        repairService.update(repairSrc);
+        Repair repairDst = repairService.getRepairById(repairSrc.getRepairId());
+
+        assertEquals(repairSrc.getAddress(),repairDst.getAddress());
+        assertEquals(repairSrc.getClientId(),repairDst.getClientId());
+        assertEquals(repairSrc.getPreferenceDate(),repairDst.getPreferenceDate());
     }
 
     @Test
-    void delete() {
+    void testDelete() {
+        log.debug("testDelete()");
+        List<Repair> repairs = repairService.findAll();
+        assertNotNull(repairs);
+        assertFalse(repairs.isEmpty());
+        repairService.delete(repairs.get(0).getRepairId());
+        assertEquals(repairService.findAll().size(),repairs.size() - 1);
     }
 
     @Test
-    void count() {
+    void testCount() {
+        log.debug("testCount()");
+        Integer count = repairService.count();
+        assertNotNull(count);
+        assertEquals(repairService.findAll().size(),count);
     }
 
     @Test
-    void filterRepairByPreferenceDate() {
+    void testFilterRepairByPreferenceDate() {
+        log.debug("testFilterRepairByPreferenceDate()");
+        LocalDate startLimitDate= LocalDate.parse("2021-12-20");
+        LocalDate endLimitDate =  LocalDate.parse("2021-12-31");
+        List<Repair> filteredRepairs = repairService.filterRepairByPreferenceDate(startLimitDate,endLimitDate);
+        assertNotNull(filteredRepairs);
+        assertFalse(filteredRepairs.isEmpty());
+        assertEquals(5,filteredRepairs.size());
+        assertEquals(startLimitDate,filteredRepairs.get(0).getPreferenceDate());
+        assertEquals(endLimitDate.minusDays(1),filteredRepairs.get(3).getPreferenceDate());
     }
 }

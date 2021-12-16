@@ -69,7 +69,7 @@ class RepairDaoJDBCImplTest {
 
     @AfterEach
     public void check() {
-        Mockito.verifyNoMoreInteractions(namedParameterJdbcTemplate);
+        verifyNoMoreInteractions(namedParameterJdbcTemplate);
     }
 
 
@@ -124,31 +124,45 @@ class RepairDaoJDBCImplTest {
         assertNotNull(result);
         assertSame(repair, result);
     }
-//TODO fix test
-//    @Test
-//    void test_create() {
-//        log.debug("test_create()");
-//        ReflectionTestUtils.setField(repairDaoJDBC,"sqlCreateRepair",sql);
-//
-//        Mockito.when(namedParameterJdbcTemplate.update(
-//                     any(),
-//                        ArgumentMatchers.<SqlParameterSource>any(),
-//                        ArgumentMatchers.<KeyHolder>any()))
-//                .thenReturn(0);
-//
-//        Integer result = repairDaoJDBC.create(repair);
-//
-//        verify(namedParameterJdbcTemplate).
-//                update(eq(sql),captorSource.capture(),captorKeyHolder.capture());
-//
-//        SqlParameterSource source = captorSource.getValue();
-//        KeyHolder keyHolder = captorKeyHolder.getValue();
-//
-//        assertNotNull(source);
-//        assertNotNull(keyHolder);
-//        assertSame(null,valueOf(result));
-//
-//    }
+
+    @Test
+    void test_create() {
+        log.debug("test_create()");
+        ReflectionTestUtils.setField(repairDaoJDBC,"sqlCreateRepair",sql);
+
+        when(namedParameterJdbcTemplate.
+                queryForObject(
+                    any(),
+                        ArgumentMatchers.<SqlParameterSource>any(),
+                    eq(Integer.class))).
+                thenReturn(0);
+
+        when(namedParameterJdbcTemplate.
+                update(
+                        any(),
+                        ArgumentMatchers.<SqlParameterSource>any(),
+                        ArgumentMatchers.<KeyHolder>any())).thenReturn(returnedRow);
+
+        Integer result = repairDaoJDBC.create(repair);
+
+        verify(namedParameterJdbcTemplate).queryForObject(eq(sql),captorSource.capture(),eq(Integer.class));
+
+        SqlParameterSource parameterSource = captorSource.getValue();
+
+
+        verify(namedParameterJdbcTemplate).
+                update(eq(sql),captorSource.capture(),captorKeyHolder.capture());
+
+        SqlParameterSource source = captorSource.getValue();
+        KeyHolder keyHolder = captorKeyHolder.getValue();
+
+        assertNotNull(parameterSource);
+       assertNotNull(source);
+       assertNotNull(keyHolder);
+       assertSame(result,keyHolder.getKey());
+
+
+    }
 
     @Test
     void test_update() {

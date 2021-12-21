@@ -3,7 +3,9 @@ package com.epam.brest.web_app;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+/**
+ * Repair controller.
+ */
 public class RepairController {
     /**
      * Goto repairs list page.
@@ -15,7 +17,7 @@ public class RepairController {
         return "repairs";
     }
     /**
-     * Goto edit employee page.
+     * Goto edit repair page.
      *
      * @return view name
      */

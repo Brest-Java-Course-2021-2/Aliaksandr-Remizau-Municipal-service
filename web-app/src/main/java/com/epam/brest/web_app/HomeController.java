@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class HomeController {
-
+    /**
+     * Redirect to default page clients.
+     *
+     * @return redirect path
+     */
     @GetMapping(value = "/")
     public String defaultPageRedirect() {
         return "redirect:clients";

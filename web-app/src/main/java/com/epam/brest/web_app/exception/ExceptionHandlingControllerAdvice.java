@@ -1,4 +1,4 @@
-package com.epam.brest.web_app;
+package com.epam.brest.web_app.exception;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

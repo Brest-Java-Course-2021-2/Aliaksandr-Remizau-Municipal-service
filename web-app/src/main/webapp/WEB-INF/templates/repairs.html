@@ -43,16 +43,16 @@
          class="py-1 mb-3 navbar navbar-light bg-light navbar-expand-sm text-dark">
         <div class="container-fluid">
             <span class="navbar-brand text-uppercase">Repairs</span>
-<!--            <form class="d-flex expand-md " th:action="@{/repairs/search}" th:method="">-->
-<!--                <input class="form-control me-1" name="dateBefore" type="date" aria-label="Date" autofocus required>-->
-<!--                <input class="form-control me-1" name="dateAfter" type="date" aria-label="Date" autofocus required>-->
-<!--                <button class="btn btn-outline-success  text-nowrap" type="submit">Search Preference Date-->
-<!--                </button>-->
-<!--            </form>-->
+            <form class="d-flex expand-md " th:action="@{/repairs/filter}" th:method="get">
+                <input class="form-control me-1" name="startLimitDate" type="date" aria-label="Date" autofocus required>
+                <input class="form-control me-1" name="endLimitDate" type="date" aria-label="Date" autofocus required>
+                <button class="btn btn-outline-success  text-nowrap" type="submit">Filter Preference Date
+                </button>
+            </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="repair.html"
-                       th:href="@{/repair/Add repair}"
+                       th:href="@{/repair}"
                        class="btn btn-sm btn-success"
                        title="New repair">
                         <i class="bi bi-box-arrow-in-down"></i> <span class="d-none d-md-inline">New</span>

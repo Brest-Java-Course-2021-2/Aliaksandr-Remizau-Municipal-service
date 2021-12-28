@@ -10,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.Date;
-
+/**
+ * Controllers for errors.
+ */
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {
     private static final Logger log = LogManager.getLogger(ExceptionHandlingControllerAdvice.class);

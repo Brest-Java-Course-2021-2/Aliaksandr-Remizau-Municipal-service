@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+/**
+ * Client controller.
+ */
 @Controller
 public class ClientController {
     private static final Logger log = LogManager.getLogger(ClientController.class);
@@ -24,6 +26,13 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    /**
+     * Constructor with  clientId and client name.
+     *
+     * @param clientValidator
+     * @param clientDtoService
+     * @param clientService
+     */
     public ClientController(ClientValidator clientValidator, ClientDtoService clientDtoService, ClientService clientService) {
         this.clientValidator = clientValidator;
         this.clientDtoService = clientDtoService;
@@ -31,8 +40,8 @@ public class ClientController {
     }
 
     /**
-     * Goto clients list page.
-     *
+     * Go to clients list page.
+     * @param model model
      * @return view name
      */
     @GetMapping(value = "/clients")
@@ -43,8 +52,10 @@ public class ClientController {
     }
 
     /**
-     * Goto edit client page.
+     * Go to edit client page.
      *
+     * @param id client's ID
+     * @param model model
      * @return view name
      */
     @GetMapping(value = "/client/{id}")
@@ -56,8 +67,9 @@ public class ClientController {
     }
 
     /**
-     * Goto new client page.
+     * Go to new client page.
      *
+     * @param model model
      * @return view name
      */
     @GetMapping(value = "/client")
@@ -105,6 +117,8 @@ public class ClientController {
     /**
      * Delete client.
      *
+     * @param id client's ID
+     * @param model model
      * @return view name
      */
     @GetMapping(value = "/client/{id}/delete")

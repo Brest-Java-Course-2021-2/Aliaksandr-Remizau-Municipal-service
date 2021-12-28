@@ -8,7 +8,9 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import static com.epam.brest.model.constants.RepairConstants.ADDRESS_SIZE;
-
+/**
+ * Repair validator.
+ */
 
 @Component
 public class RepairValidator implements Validator {

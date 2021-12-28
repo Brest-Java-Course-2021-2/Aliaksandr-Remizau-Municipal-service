@@ -12,7 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+
+
+
 /**
  * Client controller.
  */
@@ -87,7 +90,7 @@ public class ClientController {
      */
     @PostMapping(value = "/client")
     public String addClient(Client client, BindingResult result) {
-        log.debug("addClient({},{})", client);
+        log.debug("addClient({}){}", client,result);
         clientValidator.validate(client,result);
         if(result.hasErrors()){
             return "client";

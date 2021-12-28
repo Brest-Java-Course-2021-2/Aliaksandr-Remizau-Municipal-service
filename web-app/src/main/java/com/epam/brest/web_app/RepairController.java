@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * Repair controller.
  */
 @Controller
+
 public class RepairController {
     /**
      * Logger for Repair controller.
@@ -62,9 +64,12 @@ public class RepairController {
         return "repairs";
     }
     /**
+
      * Go to edit repair page.
      * @param id repair's ID
      * @param model model
+
+
      * @return view name
      */
     @GetMapping(value = "/repair/{id}")

@@ -59,7 +59,7 @@ class ClientControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("clients"))
-                //TODO:method
+
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(1)),

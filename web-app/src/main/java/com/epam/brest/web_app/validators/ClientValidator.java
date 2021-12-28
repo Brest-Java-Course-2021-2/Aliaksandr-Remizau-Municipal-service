@@ -8,7 +8,9 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import static com.epam.brest.model.constants.ClientConstants.CLIENT_NAME_SIZE;
-
+/**
+ * Client validator.
+ */
 @Component
 public class ClientValidator implements Validator {
     @Override

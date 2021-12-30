@@ -23,7 +23,6 @@ import java.util.List;
  * Repair controller.
  */
 @Controller
-
 public class RepairController {
     /**
      * Logger for Repair controller.
@@ -34,7 +33,6 @@ public class RepairController {
     private final RepairService repairService;
 
     private final ClientService clientService;
-
 
     private final RepairValidator repairValidator;
     /**

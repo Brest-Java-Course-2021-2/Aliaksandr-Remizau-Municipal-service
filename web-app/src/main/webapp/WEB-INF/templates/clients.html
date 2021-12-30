@@ -184,7 +184,8 @@
                 &nbsp&nbspPlease confirm delete!
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a id="cancelDelete"  href="clients.html" th:href="@{/clients}"
+                   class="btn btn-primary"  data-dismiss="modal">Cancel</a>
                 <a id="deleteUrl" href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
@@ -201,6 +202,7 @@
         $(this).find('.modal-body').text('Please confirm delete client: "' + target.data('name') + '"')
         document.getElementById('deleteUrl').href = '/client/' + target.data('id') + '/delete';
     })
+
 </script>
 </body>
 </html>

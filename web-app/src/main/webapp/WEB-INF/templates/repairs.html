@@ -74,7 +74,7 @@
     <div class="container-fluid">
         <div class="justify-content-center">
          <div class="row">
-             <div class="col">
+             <div class="col-12 col-lg-12 text-break">
                 <div class="card">
                     <table class="table table-striped">
                         <thead class="table-dark">
@@ -94,14 +94,19 @@
                             <td th:text="${repair.repairType}">ELECTRIC</td>
                             <td th:address="${repair.address}">Moskovskaya 236-105</td>
                             <td th:text="${repair.difficultyLevel}">EASY</td>
-                            <td th:text="${repair.preferenceDate}">30.12.2021</td>
+                            <td th:text="${repair.preferenceDate}">2021-12-30</td>
                             <td class="text-end">
                                 <a href="repair.html"
                                    th:href="@{|/repair/${repair.repairId}|}"
                                    class="btn-sm btn-outline-primary"
                                    title="Edit repair">
                                     <i class="bi-pen"></i><span class="d-none d-lg-inline">&nbsp;Edit</span></a>
-                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog"
+                                      th:attr="data-id=${repair.repairId},
+                                               data-type=${repair.repairType},
+                                               data-address=${repair.address},
+                                               data-level=${repair.difficultyLevel},
+                                               data-date=${repair.preferenceDate}">
                                     <a href="#" class="btn-sm btn-outline-danger"
                                        title="Delete repair"><i class="bi bi-trash"></i>
                                         <span class="d-none d-lg-inline">&nbsp;Delete</span>
@@ -139,12 +144,9 @@
                 <a href="repairs.html"
                    th:href="@{/repairs}"
                    class="btn btn-secondary"
-                   title="Cancel">Cancel</a>
+                   data-dismiss="modal">Cancel</a>
 
-                <a href="repairs.html"
-                   th:href="@{/repairs}"
-                   class="btn btn-danger"
-                   title="Delete">Delete</a>
+                <a id="deleteUrl" href="#" class="btn btn-danger">Delete</a>
 
             </div>
         </div>
@@ -152,12 +154,21 @@
 </div>
 
 <script src="../../resources/static/js/bootstrap.bundle.min.js"
-        th:href="@{/resources/static/js/bootstrap.bundle.min.js}"></script>
+        th:href="@{/resources/static/js/bootstrap.bundle.min.js}">
+</script>
+<script src="../../resources/static/js/jquery-3.4.1.slim.min.js"
+        th:src="@{/resources/static/js/jquery-3.4.1.slim.min.js}">
+</script>
 <script>
 
     $('#deleteDialog').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget)
-        $(this).find('.modal-body').text(target.data('name'))
+        $(this).find('.modal-body').
+               text('Please confirm delete repair: "' +
+                target.data('type') + ' ,'+
+                target.data('address') + ' ,'+
+                target.data('level') + ' ,'+
+                target.data('date')+ '"')
         document.getElementById('deleteUrl').href = '/repair/' + target.data('id') + '/delete';
     })
 </script>

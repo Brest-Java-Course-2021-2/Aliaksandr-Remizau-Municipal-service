@@ -65,7 +65,8 @@
                                        for="field_client">Client</label>
                                 <select class="form-control"
                                         id="field_client">
-                                    <option value="0">Ivanov Ivan Ivanovich</option>
+                                    <tr th:each="client : ${clients}">
+                                    <option th:value="client.clientName">Ivanov Ivan Ivanovich</option>
                                     <option value="1">Petrov Aleksandr Nikolaevich</option>
                                     <option value="2">Vasiliev Nikolay Aleksandrovich</option>
                                     <option value="3">Savchuk Maksim Aleksandrovich</option>

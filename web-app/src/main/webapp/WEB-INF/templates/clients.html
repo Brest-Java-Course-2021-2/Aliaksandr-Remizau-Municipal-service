@@ -15,7 +15,7 @@
 <body>
 
 <header>
-    <nav class="navbar navbar-light bg-purple navbar-expand-sm text-light p-1">
+    <nav class="navbar navbar-light bg navbar-expand-sm text-light p-1">
         <div class="container-fluid">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -59,8 +59,8 @@
 <section id="clients">
     <div class="container-fluid">
         <div class="row">
-            <div class="col ">
-                <div class="card ">
+            <div class="col">
+                <div class="card " th:if="not ${clients.isEmpty()}">
                     <table class="table table-striped">
                         <thead class="table-dark">
                         <tr>

@@ -59,54 +59,76 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label"
-                                       for="field_client">Client</label>
-                                <select class="form-control"
-                                        id="field_client">
-                                    <tr th:each="client : ${clients}">
-                                    <option th:value="client.clientName">Ivanov Ivan Ivanovich</option>
-                                    <option value="1">Petrov Aleksandr Nikolaevich</option>
-                                    <option value="2">Vasiliev Nikolay Aleksandrovich</option>
-                                    <option value="3">Savchuk Maksim Aleksandrovich</option>
-                                    <option value="4">Oblomov Vasiliy Ivanvich</option>
+                        <form id="repairForm"
+                        th:object="${repair}"
+                        action="repairs.html"
+                        th:action="@{${#httpServletRequest.servletPath}}"
+                        th:method="@{post}">
 
+                            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                                <p>Please fix errors below:</p>
+                            </div>
+
+                            <input id="field_repairId"
+                                   name="field_repairId"
+                                   type="hidden"
+                                   th:field="*{repairId}"/>
+
+                            <div class="mb-2">
+                                <label class="form-label"
+                                       for="field_clientId">Client</label>
+                                <select class="form-control"
+                                        id="field_clientId"
+                                        th:field="*{clientId}">
+                                    <option th:each="client : ${clients}"
+                                            th:value="${client.clientId}"
+                                            th:text="${client.clientName}"
+                                            th:selected="${client.clientId} == ${repair.clientId}">Ivanov Ivan Ivanovich
+                                    </option>
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label class="form-label"
                                        for="field_repairType">Repair Type</label>
                                 <select class="form-control"
-                                       id="field_repairType">
-                                <option value="0">ELECTRIC</option>
-                                <option value="1">PLUMBER</option>
-                                <option value="2">FINISHING</option>
-                                <option value="3">ANOTHER</option>
+                                       id="field_repairType"
+                                        th:field="*{repairType}">
+                                <option value="ELECTRIC">ELECTRIC</option>
+                                <option value="PLUMBER">PLUMBER</option>
+                                <option value="FINISHING">FINISHING</option>
+                                <option value="ANOTHER">ANOTHER</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label class="form-label"
-                                       for="field_repairAddress">Address</label>
+                                       for="field_address">Address</label>
                                 <input class="form-control"
-                                       id="field_repairAddress"
+                                       id="field_address"
                                        type="text"
-                                       value="Orlovskaya XX-XX"/>
+                                       value="Orlovskaya XX-XX"
+                                       th:field="*{address}"/>
+                                <div th:if="${#fields.hasErrors('address')}"
+                                     class="text-danger"
+                                     th:errors="*{address}">[errors]</div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label class="form-label"
-                                       for="date">Preference Date</label>
-                                <input id="date" name="date" type="date"/>
+                                       for="field_preferenceDate">Preference Date</label>
+                                <input class="form-control me-1 "
+                                       id="field_preferenceDate"
+                                       name="startLimitDate" type="date" aria-label="Date" autofocus required
+                                       th:field="*{preferenceDate}"/>
 
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label class="form-label"
-                                       for="field_repairLevel">Level Difficulty</label>
+                                       for="field_difficultyLevel">Level Difficulty</label>
                                 <select class="form-control"
-                                        id="field_repairLevel">
-                                    <option value="0">EASY</option>
-                                    <option value="1">MEDIUM</option>
-                                    <option value="2">HARD</option>
+                                        id="field_difficultyLevel"
+                                        th:field="*{difficultyLevel}">
+                                    <option value="EASY">EASY</option>
+                                    <option value="MEDIUM">MEDIUM</option>
+                                    <option value="HARD">HARD</option>
                                 </select>
                             </div>
 
@@ -118,6 +140,7 @@
                                 <a href="repairs.html"
                                    th:href="@{/repairs}"
                                    class="btn btn-success"
+                                   th:onclick="@{document.forms['repairForm'].submit(); return false;}"
                                    title="Save repair">Save</a>
                             </div>
                         </form>

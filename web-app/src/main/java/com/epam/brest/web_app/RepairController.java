@@ -23,7 +23,6 @@ import java.util.List;
  * Repair controller.
  */
 @Controller
-
 public class RepairController {
     /**
      * Logger for Repair controller.
@@ -34,7 +33,6 @@ public class RepairController {
     private final RepairService repairService;
 
     private final ClientService clientService;
-
 
     private final RepairValidator repairValidator;
     /**
@@ -105,7 +103,7 @@ public class RepairController {
 
     @PostMapping(value = "/repair")
     public String addRepair(Repair repair, BindingResult result) {
-        log.debug("addTrack({})", repair);
+        log.debug("addRepair({})", repair);
         repairValidator.validate(repair, result);
         if (result.hasErrors()) {
             return "repair";
@@ -141,6 +139,7 @@ public class RepairController {
         log.debug("filterRepairByPreferenceDate({},{})", startLimitDate, endLimitDate);
         List<Repair> repairs = repairService.filterRepairByPreferenceDate(startLimitDate,endLimitDate);
         model.addAttribute("repairs",repairs);
+        model.addAttribute("clients",clientService.findAll());
         return "repairs";
     }
 

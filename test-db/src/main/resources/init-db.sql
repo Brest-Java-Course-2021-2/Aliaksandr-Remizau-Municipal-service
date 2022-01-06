@@ -1,6 +1,6 @@
-INSERT INTO CLIENT (client_id, client_name) VALUES (1, 'Aleksandrovich Aleksey Iosifovich');
-INSERT INTO CLIENT (client_id, client_name) VALUES (2, 'Orlov Petr Ivanovich');
-INSERT INTO CLIENT (client_id, client_name) VALUES (3, 'Borodach Michail Ivanovich');
+INSERT INTO CLIENT (client_id, client_name) VALUES (1, 'ALEKSANDROVICH ALEKSEY IOSIFOVICH');
+INSERT INTO CLIENT (client_id, client_name) VALUES (2, 'ORLOV PETR IVANOVICH');
+INSERT INTO CLIENT (client_id, client_name) VALUES (3, 'BORODACH MICHAIL IVANOVICH');
 
 
 INSERT INTO REPAIR (repair_id, repair_type, address, difficulty_level, preference_date, client_id)

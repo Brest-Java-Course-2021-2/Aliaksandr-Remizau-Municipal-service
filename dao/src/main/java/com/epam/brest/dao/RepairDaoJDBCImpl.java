@@ -6,6 +6,7 @@ import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -13,6 +14,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,6 +23,7 @@ import java.util.List;
 /**
  *  Repair DAO implementation.
  */
+@Component
 public class RepairDaoJDBCImpl implements RepairDao{
     /**
      * Logger.
@@ -28,6 +32,7 @@ public class RepairDaoJDBCImpl implements RepairDao{
     /**
      * NamedParameterJdbcTemplate.
      */
+    @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     /**
      * SQL query for select all repairs.
@@ -77,11 +82,16 @@ public class RepairDaoJDBCImpl implements RepairDao{
     @Value("${SQL_COUNT_REPAIRS}")
     private  String sqlCountRepairs;
 
+    public RepairDaoJDBCImpl(){
+
+    }
+
     /**
      * Constructor with  NamedParameterJdbcTemplate.
      *
      * @param namedParameterJdbcTemplate
      */
+
     public RepairDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }

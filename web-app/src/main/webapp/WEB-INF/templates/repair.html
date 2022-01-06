@@ -59,53 +59,82 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label"
-                                       for="field_client">Client</label>
-                                <select class="form-control"
-                                        id="field_client">
-                                    <option value="0">Ivanov Ivan Ivanovich</option>
-                                    <option value="1">Petrov Aleksandr Nikolaevich</option>
-                                    <option value="2">Vasiliev Nikolay Aleksandrovich</option>
-                                    <option value="3">Savchuk Maksim Aleksandrovich</option>
-                                    <option value="4">Oblomov Vasiliy Ivanvich</option>
+                        <form id="repairForm"
+                        th:object="${repair}"
+                        action="repairs.html"
+                        th:action="@{${#httpServletRequest.servletPath}}"
+                        th:method="@{post}">
 
+                            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger ">
+                                <p>Please fix errors below:</p>
+                            </div>
+
+                            <input id="field_repairId"
+                                   name="field_repairId"
+                                   type="hidden"
+                                   th:field="*{repairId}"/>
+
+                            <div class="mb-2">
+                                <label class="form-label"
+                                       for="field_clientId">Client</label>
+                                <select class="form-control"
+                                        id="field_clientId"
+                                        th:field="*{clientId}">
+                                    <option th:each="client : ${clients}"
+                                            th:value="${client.clientId}"
+                                            th:text="${client.clientName}">
+                                            Ivanov Ivan Ivanovich
+                                    </option>
                                 </select>
                             </div>
-                            <div class="mb-3">
+
+                            <div class="mb-2">
                                 <label class="form-label"
                                        for="field_repairType">Repair Type</label>
                                 <select class="form-control"
-                                       id="field_repairType">
-                                <option value="0">ELECTRIC</option>
-                                <option value="1">PLUMBER</option>
-                                <option value="2">FINISHING</option>
-                                <option value="3">ANOTHER</option>
+                                       id="field_repairType"
+                                        th:field="*{repairType}">
+                                <option value="ELECTRIC">ELECTRIC</option>
+                                <option value="PLUMBER">PLUMBER</option>
+                                <option value="FINISHING">FINISHING</option>
+                                <option value="ANOTHER">ANOTHER</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
+
+                            <div class="mb-2">
                                 <label class="form-label"
-                                       for="field_repairAddress">Address</label>
+                                       for="field_address">Address</label>
                                 <input class="form-control"
-                                       id="field_repairAddress"
+                                       th:class="${#fields.hasErrors('address')} ? 'form-control is-invalid' : 'form-control'"
+                                       id="field_address"
                                        type="text"
-                                       value="Orlovskaya XX-XX"/>
+                                       value="Orlovskaya XX-XX"
+                                       th:field="*{address}"/>
+                                <div th:if="${#fields.hasErrors('address')}"
+                                     class="text-danger"
+                                     th:errors="*{address}">[errors]</div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label class="form-label"
-                                       for="date">Preference Date</label>
-                                <input id="date" name="date" type="date"/>
+                                       for="field_preferenceDate">Preference Date</label>
+                                <input class="form-control me-1 "
+                                       id="field_preferenceDate"
+                                       name="startLimitDate" type="date" aria-label="Date" autofocus required
+                                       th:field="*{preferenceDate}"/>
+                                <div th:if="${#fields.hasErrors('preferenceDate')}"
+                                     class="text-danger"
+                                     th:errors="*{preferenceDate}">[errors]</div>
 
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label class="form-label"
-                                       for="field_repairLevel">Level Difficulty</label>
+                                       for="field_difficultyLevel">Level Difficulty</label>
                                 <select class="form-control"
-                                        id="field_repairLevel">
-                                    <option value="0">EASY</option>
-                                    <option value="1">MEDIUM</option>
-                                    <option value="2">HARD</option>
+                                        id="field_difficultyLevel"
+                                        th:field="*{difficultyLevel}">
+                                    <option value="EASY">EASY</option>
+                                    <option value="MEDIUM">MEDIUM</option>
+                                    <option value="HARD">HARD</option>
                                 </select>
                             </div>
 
@@ -117,6 +146,7 @@
                                 <a href="repairs.html"
                                    th:href="@{/repairs}"
                                    class="btn btn-success"
+                                   th:onclick="@{document.forms['repairForm'].submit(); return false;}"
                                    title="Save repair">Save</a>
                             </div>
                         </form>
@@ -131,6 +161,12 @@
     <hr/>
     <p class="text-center">&copy;Epam Brest-Java-Course 2021</p>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+        crossorigin="anonymous"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+        crossorigin="anonymous"></script>
 
 <script src="../../resources/static/js/bootstrap.bundle.min.js"
         th:href="@{/resources/static/js/bootstrap.bundle.min.js}"></script>

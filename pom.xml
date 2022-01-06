@@ -32,7 +32,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <junit.version>5.4.0</junit.version>
         <spring.version>5.3.4</spring.version>
-        <log4j2.version>2.16.0</log4j2.version>
+        <log4j2.version>2.17.0</log4j2.version>
         <javax.servlet.version>4.0.0</javax.servlet.version>
         <h2.database.version>1.4.200</h2.database.version>
         <thymeleaf-spring5.version>3.0.12.RELEASE</thymeleaf-spring5.version>

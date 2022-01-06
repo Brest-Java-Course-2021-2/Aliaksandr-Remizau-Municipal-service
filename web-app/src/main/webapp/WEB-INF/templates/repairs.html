@@ -15,12 +15,13 @@
 <body>
 
 <header>
-    <nav class="navbar navbar-light bg-purple navbar-expand-sm text-dark p-1">
+    <nav class="navbar navbar-light bg navbar-expand-sm text-dark p-1">
         <div class="container-fluid">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="/" class="navbar-brand">
+            <a href="https://github.com/Brest-Java-Course-2021-2/Aliaksandr-Remizau-Municipal-service/blob/main/documentation/MunicipalService-specification(ENG).md"
+               class="navbar-brand">
                 <img src="../../resources/static/img/building.svg"
                                                   th:src="@{/resources/static/img/building.svg}"
                                                   height="32" width="32" alt="MS"></a>
@@ -40,15 +41,21 @@
         </div>
     </nav>
     <nav id="main-header"
-         class="py-1 mb-3 navbar navbar-light bg-light navbar-expand-sm text-dark">
+         class="py-1 mb-3 navbar navbar-expand-sm navbar-light bg-light  text-dark">
         <div class="container-fluid">
             <span class="navbar-brand text-uppercase">Repairs</span>
-            <form class="d-flex expand-md " th:action="@{/repairs/filter}" th:method="get">
-                <input class="form-control me-1" name="startLimitDate" type="date" aria-label="Date" autofocus required>
-                <input class="form-control me-1" name="endLimitDate" type="date" aria-label="Date" autofocus required>
-                <button class="btn btn-outline-success  text-nowrap" type="submit">Filter Preference Date
+
+            <form class="col-6 col-sm-6 col-md-auto d-flex justify-content-center "
+                  th:action="@{/repairs/filter}" th:method="get">
+                <input class="form-control me-1 "
+                       name="startLimitDate" type="date" aria-label="Date" autofocus required>
+                <input class="form-control me-1 "
+                       name="endLimitDate" type="date" aria-label="Date" autofocus required>
+                <button class="btn btn-outline-success  text-nowrap" title="Filter" type="submit">
+                    <i class="bi bi-search"></i><span class="d-none d-lg-inline"> Filter Preference Date</span>
                 </button>
             </form>
+
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="repair.html"
@@ -65,9 +72,9 @@
 
 <section id="repairs">
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="justify-content-center">
          <div class="row">
-            <div class="col">
+             <div class="col-12 col-lg-12 text-break">
                 <div class="card">
                     <table class="table table-striped">
                         <thead class="table-dark">
@@ -80,79 +87,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr><td>&nbspIvanov Ivan Ivanovich</td>
-                            <td>ELECTRIC</td>
-                            <td>Moskovskaya 236-105</td>
-                            <td>EASY</td>
-                            <td>30.12.2021</td>
+                        <tr th:each="repair : ${repairs}">
+                            <td th:each="client : ${clients}"
+                                th:if="${repair.clientId == client.clientId}"
+                                th:text="${client.clientName}">&nbspIvanov Ivan Ivanovich</td>
+                            <td th:text="${repair.repairType}">ELECTRIC</td>
+                            <td th:text="${repair.address}">Moskovskaya 236-105</td>
+                            <td th:text="${repair.difficultyLevel}">EASY</td>
+                            <td th:text="${repair.preferenceDate}">2021-12-30</td>
                             <td class="text-end">
                                 <a href="repair.html"
-                                   th:href="@{/repair/1}"
+                                   th:href="@{|/repair/${repair.repairId}|}"
                                    class="btn-sm btn-outline-primary"
                                    title="Edit repair">
-                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
-                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <i class="bi-pen"></i><span class="d-none d-lg-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog"
+                                      th:attr="data-id=${repair.repairId},
+                                               data-type=${repair.repairType},
+                                               data-address=${repair.address},
+                                               data-level=${repair.difficultyLevel},
+                                               data-date=${repair.preferenceDate}">
                                     <a href="#" class="btn-sm btn-outline-danger"
-                                       title="Delete repair"><i class="bi bi-trash"></i><span
-                                            class="d-none d-md-inline">&nbsp;Delete</span>
-                                    </a>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr><td>&nbspIvanov Ivan Ivanovich</td>
-                            <td>ANOTHER</td>
-                            <td>Moskovskaya 236-105</td>
-                            <td>HARD</td>
-                            <td>03.01.2022</td>
-                            <td class="text-end">
-                                <a href="repair.html"
-                                   th:href="@{/repair/2}"
-                                   class="btn-sm btn-outline-primary"
-                                   title="Edit repair">
-                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
-                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-danger"
-                                       title="Delete repair"><i class="bi bi-trash"></i><span
-                                            class="d-none d-md-inline">&nbsp;Delete</span>
-                                    </a>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr><td>&nbspIvanov Ivan Ivanovich</td>
-                            <td>ELECTRIC</td>
-                            <td>Moskovskaya 236-105</td>
-                            <td>EASY</td>
-                            <td>30.12.2021</td>
-                            <td class="text-end">
-                                <a href="repair.html"
-                                   th:href="@{/repair/3}"
-                                   class="btn-sm btn-outline-primary"
-                                   title="Edit repair">
-                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
-                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-danger"
-                                       title="Delete repair"><i class="bi bi-trash"></i><span
-                                            class="d-none d-md-inline">&nbsp;Delete</span>
-                                    </a>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>&nbspVasiliev Nikolay Aleksandrovich</td>
-                            <td>PLUMBER</td>
-                            <td>Moskovskaya 230-100</td>
-                            <td>HARD</td>
-                            <td>23.12.2021</td>
-                            <td class="text-end">
-                                <a href="repair.html"
-                                   th:href="@{/repair/4}"
-                                   class="btn-sm btn-outline-primary"
-                                   title="Edit repair">
-                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
-                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-danger"
-                                       title="delete repair"><i class="bi bi-trash"></i><span
-                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                       title="Delete repair"><i class="bi bi-trash"></i>
+                                        <span class="d-none d-lg-inline">&nbsp;Delete</span>
                                     </a>
                                 </span>
                             </td>
@@ -187,12 +144,9 @@
                 <a href="repairs.html"
                    th:href="@{/repairs}"
                    class="btn btn-secondary"
-                   title="Cancel">Cancel</a>
+                   data-dismiss="modal">Cancel</a>
 
-                <a href="repairs.html"
-                   th:href="@{/repairs}"
-                   class="btn btn-danger"
-                   title="Delete">Delete</a>
+                <a id="deleteUrl" href="#" class="btn btn-danger">Delete</a>
 
             </div>
         </div>
@@ -200,6 +154,23 @@
 </div>
 
 <script src="../../resources/static/js/bootstrap.bundle.min.js"
-        th:href="@{/resources/static/js/bootstrap.bundle.min.js}"></script>
+        th:href="@{/resources/static/js/bootstrap.bundle.min.js}">
+</script>
+<script src="../../resources/static/js/jquery-3.4.1.slim.min.js"
+        th:src="@{/resources/static/js/jquery-3.4.1.slim.min.js}">
+</script>
+<script>
+
+    $('#deleteDialog').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget)
+        $(this).find('.modal-body').
+               text('Please confirm delete repair: "' +
+                target.data('type') + ' ,'+
+                target.data('address') + ' ,'+
+                target.data('level') + ' ,'+
+                target.data('date')+ '"')
+        document.getElementById('deleteUrl').href = '/repair/' + target.data('id') + '/delete';
+    })
+</script>
 </body>
 </html>

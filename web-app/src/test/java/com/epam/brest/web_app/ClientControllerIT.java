@@ -63,21 +63,21 @@ class ClientControllerIT {
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(1)),
-                                hasProperty("clientName", is("Aleksandrovich Aleksey Iosifovich")),
+                                hasProperty("clientName", is("ALEKSANDROVICH ALEKSEY IOSIFOVICH")),
                                 hasProperty("numberOfRepairs", is(2))
                         )
                 )))
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(2)),
-                                hasProperty("clientName", is("Orlov Petr Ivanovich")),
+                                hasProperty("clientName", is("ORLOV PETR IVANOVICH")),
                                 hasProperty("numberOfRepairs", is(3))
                         )
                 )))
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(3)),
-                                hasProperty("clientName", is("Borodach Michail Ivanovich")),
+                                hasProperty("clientName", is("BORODACH MICHAIL IVANOVICH")),
                                 hasProperty("numberOfRepairs", is((0))
                         )
                 ))));
@@ -132,7 +132,7 @@ class ClientControllerIT {
                 .andExpect(view().name("client"))
                 .andExpect(model().attribute("isNew", is(false)))
                 .andExpect(model().attribute("client", hasProperty("clientId", is(1))))
-                .andExpect(model().attribute("client", hasProperty("clientName", is("Aleksandrovich Aleksey Iosifovich"))));
+                .andExpect(model().attribute("client", hasProperty("clientName", is("ALEKSANDROVICH ALEKSEY IOSIFOVICH"))));
     }
 
     @Test

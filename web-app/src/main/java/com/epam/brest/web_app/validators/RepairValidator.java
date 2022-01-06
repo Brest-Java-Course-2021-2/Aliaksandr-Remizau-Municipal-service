@@ -7,6 +7,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.time.LocalDate;
+
 import static com.epam.brest.model.constants.RepairConstants.ADDRESS_SIZE;
 /**
  * Repair validator.
@@ -28,6 +30,8 @@ public class RepairValidator implements Validator {
                 && repair.getAddress().length() > ADDRESS_SIZE) {
             errors.rejectValue("address", "address.maxSize");
         }
-
+        if (repair.getPreferenceDate() == null) {
+            errors.rejectValue("preferenceDate", "preferenceDate.empty");
+        }
     }
 }

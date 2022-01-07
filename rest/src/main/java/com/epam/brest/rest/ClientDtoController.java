@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
-
+/**
+ * Client Dto Controller.
+ */
 @RestController
 public class ClientDtoController {
     private static final Logger log = LogManager.getLogger(ClientDtoController.class);

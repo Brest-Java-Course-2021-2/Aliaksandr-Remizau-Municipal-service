@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 class VersionControllerTest {
     private static final Logger log = LogManager.getLogger(VersionControllerTest.class);
+
     private VersionController versionController = new VersionController();
 
     private MockMvc mockMvc;

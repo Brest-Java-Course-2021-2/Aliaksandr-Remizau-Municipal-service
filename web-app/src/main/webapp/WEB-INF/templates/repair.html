@@ -67,7 +67,6 @@
 
                             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger ">
                                 <p>Please fix errors below:</p>
-
                             </div>
 
                             <input id="field_repairId"
@@ -83,11 +82,12 @@
                                         th:field="*{clientId}">
                                     <option th:each="client : ${clients}"
                                             th:value="${client.clientId}"
-                                            th:text="${client.clientName}"
-                                            th:selected="${client.clientId} == ${repair.clientId}">Ivanov Ivan Ivanovich
+                                            th:text="${client.clientName}">
+                                            Ivanov Ivan Ivanovich
                                     </option>
                                 </select>
                             </div>
+
                             <div class="mb-2">
                                 <label class="form-label"
                                        for="field_repairType">Repair Type</label>
@@ -106,7 +106,6 @@
                                        for="field_address">Address</label>
                                 <input class="form-control"
                                        th:class="${#fields.hasErrors('address')} ? 'form-control is-invalid' : 'form-control'"
-                                       th:placeholder="#{input_address}"
                                        id="field_address"
                                        type="text"
                                        value="Orlovskaya XX-XX"
@@ -162,6 +161,12 @@
     <hr/>
     <p class="text-center">&copy;Epam Brest-Java-Course 2021</p>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+        crossorigin="anonymous"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+        crossorigin="anonymous"></script>
 
 <script src="../../resources/static/js/bootstrap.bundle.min.js"
         th:href="@{/resources/static/js/bootstrap.bundle.min.js}"></script>

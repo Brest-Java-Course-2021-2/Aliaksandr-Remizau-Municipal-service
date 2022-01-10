@@ -107,7 +107,6 @@ public class RepairController {
         repairValidator.validate(repair, result);
         if (result.hasErrors()) {
             model.addAttribute("isNew",true);
-//            model.addAttribute("repair",new Repair());
             model.addAttribute("clients", clientService.findAll());
             return "repair";
         }else {
@@ -122,7 +121,6 @@ public class RepairController {
         repairValidator.validate(repair, result);
         if (result.hasErrors()) {
             model.addAttribute("isNew",false);
-//            model.addAttribute("repair",repair);
             model.addAttribute("clients",clientService.findAll());
             return "repair";
         }else {

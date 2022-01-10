@@ -21,7 +21,11 @@ public class ClientDtoController {
     public ClientDtoController(ClientDtoService clientDtoService) {
         this.clientDtoService = clientDtoService;
     }
-
+    /**
+     * Get department Dtos.
+     *
+     * @return Department Dtos collection.
+     */
     @GetMapping(value = "/clients_dto")
     public final Collection<ClientDto> getClientById(@PathVariable Integer id){
 

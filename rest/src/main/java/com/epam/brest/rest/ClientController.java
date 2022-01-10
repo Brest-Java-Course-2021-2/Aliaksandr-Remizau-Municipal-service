@@ -7,6 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * Client Controller.
  */
@@ -19,6 +22,13 @@ public class ClientController {
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
+    }
+
+    @GetMapping(value = "/clients")
+    public final List<Client> findAll(){
+
+        log.debug("findAll()");
+        return clientService.findAll();
     }
 
     @GetMapping(value = "/clients/{id}")

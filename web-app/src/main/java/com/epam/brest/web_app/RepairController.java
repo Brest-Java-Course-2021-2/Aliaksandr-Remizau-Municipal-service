@@ -102,24 +102,32 @@ public class RepairController {
 
 
     @PostMapping(value = "/repair")
-    public String addRepair(Repair repair, BindingResult result) {
+    public String addRepair(Repair repair, BindingResult result,Model model) {
         log.debug("addRepair({})", repair);
         repairValidator.validate(repair, result);
         if (result.hasErrors()) {
+            model.addAttribute("isNew",true);
+//            model.addAttribute("repair",new Repair());
+            model.addAttribute("clients", clientService.findAll());
             return "repair";
+        }else {
+            this.repairService.create(repair);
         }
-        this.repairService.create(repair);
         return "redirect:/repairs";
     }
 
     @PostMapping(value = "/repair/{id}")
-    public String updateRepair(Repair repair, BindingResult result) {
+    public String updateRepair(Repair repair, BindingResult result,Model model) {
         log.debug("updateRepair({})", repair);
         repairValidator.validate(repair, result);
         if (result.hasErrors()) {
+            model.addAttribute("isNew",false);
+//            model.addAttribute("repair",repair);
+            model.addAttribute("clients",clientService.findAll());
             return "repair";
+        }else {
+            this.repairService.update(repair);
         }
-        this.repairService.update(repair);
         return "redirect:/repairs";
     }
 

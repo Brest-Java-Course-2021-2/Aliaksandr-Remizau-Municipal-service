@@ -1,15 +1,18 @@
 package com.epam.brest.rest;
 
-import com.epam.brest.model.Client;
+
 import com.epam.brest.model.Repair;
-import com.epam.brest.service.ClientService;
 import com.epam.brest.service.RepairService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 /**
  * Repair rest Controller.
@@ -62,4 +65,16 @@ public class RepairController {
         int result = repairService.delete(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/repairs/filter")
+    public final Collection<Repair> filterRepairByPreferenceDate(@RequestParam("startLimitDate")
+                                                     @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startLimitDate,
+                                                                 @RequestParam("endLimitDate")
+                                                     @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endLimitDate,
+                                                                 Model model) {
+        log.debug("filterRepairByPreferenceDate({},{})", startLimitDate, endLimitDate);
+        List<Repair> repairs = repairService.filterRepairByPreferenceDate(startLimitDate, endLimitDate);
+        return repairs;
+    }
+
 }

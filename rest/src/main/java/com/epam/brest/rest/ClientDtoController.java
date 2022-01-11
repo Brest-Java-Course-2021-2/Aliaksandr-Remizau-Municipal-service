@@ -27,7 +27,7 @@ public class ClientDtoController {
      * @return Department Dtos collection.
      */
     @GetMapping(value = "/clients_dto")
-    public final Collection<ClientDto> getClientById(@PathVariable Integer id){
+    public final Collection<ClientDto> getDepartmentsDtoWithCountRepairs(@PathVariable Integer id){
 
         log.debug("getClientById()");
         return clientDtoService.findAllWithRepairs();

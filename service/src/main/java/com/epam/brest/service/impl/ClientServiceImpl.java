@@ -3,8 +3,10 @@ package com.epam.brest.service.impl;
 import com.epam.brest.dao.ClientDao;
 import com.epam.brest.model.Client;
 import com.epam.brest.service.ClientService;
+import com.epam.brest.service.impl.exceptions.ClientNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Client> findAll() {
 
         log.debug("findAll()");
@@ -42,11 +45,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Client getClientById(Integer clientId) {
 
         log.debug("getClientById(id:{})", clientId);
 
-        return this.clientDao.getClientById(clientId);
+        try {
+            return this.clientDao.getClientById(clientId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ClientNotFoundException(clientId);
+        }
     }
 
     @Override
@@ -59,6 +67,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public Integer update(Client client) {
 
         log.debug("update({})", client);
@@ -67,6 +76,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public Integer delete(Integer clientId) {
 
         log.debug("delete client id:{}",clientId);

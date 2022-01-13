@@ -105,10 +105,9 @@
                                 <label class="form-label"
                                        for="field_address">Address</label>
                                 <input class="form-control"
-                                       th:class="${#fields.hasErrors('address')} ? 'form-control is-invalid' : 'form-control'"
                                        id="field_address"
                                        type="text"
-                                       value="Orlovskaya XX-XX"
+                                       value="Orlovskaya XX-XX" autofocus required
                                        th:field="*{address}"/>
                                 <div th:if="${#fields.hasErrors('address')}"
                                      class="text-danger"

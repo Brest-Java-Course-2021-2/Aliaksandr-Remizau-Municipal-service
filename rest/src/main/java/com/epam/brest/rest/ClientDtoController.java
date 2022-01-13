@@ -5,10 +5,11 @@ import com.epam.brest.service.ClientDtoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
+
 /**
  * Client Dto Controller.
  */
@@ -21,11 +22,15 @@ public class ClientDtoController {
     public ClientDtoController(ClientDtoService clientDtoService) {
         this.clientDtoService = clientDtoService;
     }
-
+    /**
+     * Get Client Dto.
+     *
+     * @return Client Dto collection.
+     */
     @GetMapping(value = "/clients_dto")
-    public final Collection<ClientDto> getClientById(@PathVariable Integer id){
+    public final List<ClientDto> getClientsDtoWithCountRepairs(){
 
-        log.debug("getClientById()");
+        log.debug("getClientsDtoWithCountRepairs({})");
         return clientDtoService.findAllWithRepairs();
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.brest.rest.exception;
 
+import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.service.impl.exceptions.ClientNotFoundException;
 import com.epam.brest.service.impl.exceptions.RepairNotFoundException;
 import org.apache.logging.log4j.LogManager;
@@ -43,6 +44,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse(CLIENT_NOT_FOUND, details);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(DuplicateEntityException.class)
+    public final ResponseEntity<ErrorResponse> handleDuplicateEntityException
+            (DuplicateEntityException ex, WebRequest request) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getLocalizedMessage());
+        ErrorResponse error = new ErrorResponse(VALIDATION_ERROR, details);
+        return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(Exception ex, WebRequest request) {

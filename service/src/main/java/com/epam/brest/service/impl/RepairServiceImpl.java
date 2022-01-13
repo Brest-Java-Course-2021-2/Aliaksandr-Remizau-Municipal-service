@@ -57,24 +57,33 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Integer create(Repair repair) {
         log.debug("create({})",repair);
         return this.repairDao.create(repair);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Integer update(Repair repair) {
         log.debug("update({})",repair);
-        return this.repairDao.update(repair);
+        try {
+            return this.repairDao.update(repair);
+        }catch (EmptyResultDataAccessException ex){
+            throw new RepairNotFoundException(repair.getRepairId());
+        }
     }
 
     @Override
     @Transactional
     public Integer delete(Integer repairId) {
         log.debug("delete({})",repairId);
-        return this.repairDao.delete(repairId);
+        try {
+            return this.repairDao.delete(repairId);
+        }catch (EmptyResultDataAccessException ex){
+            throw new RepairNotFoundException(repairId);
+        }
+
     }
 
     @Override

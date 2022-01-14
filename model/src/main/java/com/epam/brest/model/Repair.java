@@ -3,6 +3,8 @@ package com.epam.brest.model;
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
 import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -35,6 +37,7 @@ public class Repair {
      *  preference Date of the repair.
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate preferenceDate;
 
     /**

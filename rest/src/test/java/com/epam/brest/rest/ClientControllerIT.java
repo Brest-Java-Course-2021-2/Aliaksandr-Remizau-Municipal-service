@@ -30,7 +30,6 @@ import java.util.Optional;
 
 import static com.epam.brest.model.constants.ClientConstants.CLIENT_NAME_SIZE;
 import static com.epam.brest.rest.exception.CustomExceptionHandler.CLIENT_NOT_FOUND;
-import static com.epam.brest.rest.exception.CustomExceptionHandler.VALIDATION_ERROR;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,29 +71,45 @@ public class ClientControllerIT {
         assertNotNull(id);
     }
 
+    @Test
+    public void shouldFailCreateClientWithDuplicateName() throws Exception {
+
+        log.debug("shouldFailCreateClientWithDuplicateName()");
+
+        Client clientFirst = new Client(RandomStringUtils.randomAlphabetic(CLIENT_NAME_SIZE));
+        Integer id = mockClientService.create(clientFirst);
+        assertNotNull(id);
+        Client clientSecond =new Client(clientFirst.getClientName());
+
+        MockHttpServletResponse response =
+                mockMvc.perform(post(CLIENTS_ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(clientSecond))
+                                .accept(MediaType.APPLICATION_JSON)
+                        ).andExpect(status().isUnprocessableEntity())
+                        .andReturn().getResponse();
+
+        assertNotNull(response);
+        ErrorResponse errorResponse = objectMapper.readValue(response.getContentAsString(), ErrorResponse.class);
+        assertNotNull(errorResponse);
+        assertTrue(response.getContentAsString().contains("Client with the same name already exists in DB."));
+    }
+
 //    @Test
-//    public void shouldFailCreateClientWithDuplicateName() throws Exception {
-//
-//        log.debug("shouldFailCreateClientWithDuplicateName()");
-//
-//        Client clientFirst = new Client(RandomStringUtils.randomAlphabetic(CLIENT_NAME_SIZE));
-//        Integer id = mockClientService.create(clientFirst);
-//        assertNotNull(id);
-//        Client clientSecond =new Client(clientFirst.getClientName());
+//    public void shouldCreateClientWithEmptyName() throws Exception {
+//        log.debug("shouldCreateClientWithEmptyName()");
+//        Client client = new Client("");
 //
 //        MockHttpServletResponse response =
 //                mockMvc.perform(post(CLIENTS_ENDPOINT)
 //                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(objectMapper.writeValueAsString(clientSecond))
+//                                .content(objectMapper.writeValueAsString(client))
 //                                .accept(MediaType.APPLICATION_JSON)
-//                        ).andExpect(status().isUnprocessableEntity())
+//                        ).andExpect(status().isBadRequest())
 //                        .andReturn().getResponse();
 //
 //        assertNotNull(response);
-//        ErrorResponse errorResponse = objectMapper.readValue(response.getContentAsString(), ErrorResponse.class);
-//        assertNotNull(errorResponse);
-//        assertTrue(response.getContentAsString()
-//                .contains(String.format("Client with the same name already exists in DB", clientFirst.getClientName())));
+//        assertTrue(response.getContentAsString().contains("Please provide client name!"));
 //    }
 
     @Test

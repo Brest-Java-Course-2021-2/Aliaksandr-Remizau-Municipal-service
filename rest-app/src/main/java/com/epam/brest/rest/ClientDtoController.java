@@ -15,18 +15,31 @@ import java.util.List;
  */
 @RestController
 public class ClientDtoController {
+    /**
+     * Logger.
+     */
     private static final Logger log = LogManager.getLogger(ClientDtoController.class);
-
+    /**
+     * Field clientDtoService.
+     */
     private final ClientDtoService clientDtoService;
+
+    /**
+     * Constructor ClientDtoController.
+     *
+     * @param clientDtoService .
+     */
 
     public ClientDtoController(ClientDtoService clientDtoService) {
         this.clientDtoService = clientDtoService;
     }
+
     /**
      * Get Client Dto.
      *
      * @return Client Dto collection.
      */
+
     @GetMapping(value = "/clients_dto")
     public final List<ClientDto> getClientsDtoWithCountRepairs(){
 

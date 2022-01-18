@@ -11,18 +11,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Client Controller.
+ * Client Rest Controller.
  */
 @RestController
 public class ClientController {
-
+    /**
+     * Logger.
+     */
     private static final Logger log = LogManager.getLogger(ClientController.class);
-
+    /**
+     * Field clientService.
+     */
     private final ClientService clientService;
+
+    /**
+     * Constructor.
+     *
+     * @param clientService clientService.
+     */
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
+
+    /**
+     * Find All clients.
+     *
+     * @return client's list in json.
+     */
 
     @GetMapping(value = "/clients")
     public final List<Client> findAll(){
@@ -31,12 +47,26 @@ public class ClientController {
         return clientService.findAll();
     }
 
+    /**
+     * Get client by id.
+     *
+     * @param id client.
+     * @return client in json.
+     */
+
     @GetMapping(value = "/clients/{id}")
     public final Client getClientById(@PathVariable Integer id) {
 
         log.debug("getClientById({})",id);
         return clientService.getClientById(id);
     }
+
+    /**
+     * Create client.
+     *
+     * @param client .
+     * @return id created client,HttpStatus.OK.
+     */
 
     @PostMapping(path = "/clients", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Integer> createClient(@RequestBody Client client) {
@@ -46,6 +76,13 @@ public class ClientController {
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
+    /**
+     * Update client.
+     *
+     * @param  client .
+     * @return int result amount of updated client,HttpStatus.OK.
+     */
+
     @PutMapping(value = "/clients", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Integer> updateClient(@RequestBody Client client) {
 
@@ -54,9 +91,17 @@ public class ClientController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    /**
+     * Delete client.
+     *
+     * @param  id .
+     * @return int result amount of deleted client,HttpStatus.OK.
+     */
+
     @DeleteMapping(value = "/clients/{id}", produces = {"application/json"})
     public ResponseEntity<Integer> deleteClient(@PathVariable Integer id) {
 
+        log.debug("deleteClient()");
         int result = clientService.delete(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }

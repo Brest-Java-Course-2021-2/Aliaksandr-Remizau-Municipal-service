@@ -71,8 +71,12 @@ public class ClientServiceImpl implements ClientService {
     public Integer update(Client client) {
 
         log.debug("update({})", client);
-
-        return this.clientDao.update(client);
+        try {
+            clientDao.getClientById(client.getClientId());
+            return this.clientDao.update(client);
+        }catch (EmptyResultDataAccessException ex){
+            throw new ClientNotFoundException(client.getClientId());
+        }
     }
 
     @Override
@@ -80,8 +84,11 @@ public class ClientServiceImpl implements ClientService {
     public Integer delete(Integer clientId) {
 
         log.debug("delete client id:{}",clientId);
-
-        return this.clientDao.delete(clientId);
+        try {
+            return this.clientDao.delete(clientId);
+        }catch (EmptyResultDataAccessException ex){
+            throw new ClientNotFoundException(clientId);
+        }
     }
 
     @Override

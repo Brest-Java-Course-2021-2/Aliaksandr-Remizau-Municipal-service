@@ -1,5 +1,7 @@
 package com.epam.brest.model;
 
+import org.springframework.lang.NonNull;
+
 import java.util.Objects;
 /**
  * POJO Client for model.

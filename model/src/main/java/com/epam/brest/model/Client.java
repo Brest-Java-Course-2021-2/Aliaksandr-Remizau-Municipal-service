@@ -52,12 +52,14 @@ public class Client {
     }
 
     /**
-     * Set the client's identifier.
+     * Set in builder the client's identifier.
      *
      * @param clientId Client Id.
+     * @return Client .
      */
-    public void setClientId( final Integer clientId) {
+    public Client setClientId(Integer clientId) {
         this.clientId = clientId;
+        return this;
     }
 
     /**
@@ -70,13 +72,16 @@ public class Client {
     }
 
     /**
-     * Sets the client's name.
+     * Sets in builder the client's name .
      *
      * @param clientName Client Name.
+     * @return  Client .
      */
-    public void setClientName(String clientName) {
+   public Client setClientName(String clientName) {
         this.clientName = clientName;
+        return this;
     }
+
 
     @Override
     public boolean equals(Object o) {

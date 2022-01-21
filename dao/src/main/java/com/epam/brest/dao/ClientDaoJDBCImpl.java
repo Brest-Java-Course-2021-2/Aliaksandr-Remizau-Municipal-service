@@ -158,10 +158,7 @@ public class ClientDaoJDBCImpl implements ClientDao {
 
             log.debug("Start : mapRow()");
 
-            Client client = new Client();
-            client.setClientId(resultSet.getInt("client_id"));
-            client.setClientName(resultSet.getString("client_name"));
-
+            Client client = new Client(resultSet.getInt("client_id"),resultSet.getString("client_name"));
             return client;
         }
     }

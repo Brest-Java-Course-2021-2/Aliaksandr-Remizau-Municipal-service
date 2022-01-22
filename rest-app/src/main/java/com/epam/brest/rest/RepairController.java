@@ -128,6 +128,6 @@ public class RepairController {
         log.debug("filterRepairByPreferenceDate({},{})", startLimitDate, endLimitDate);
 
         List<Repair> repairs = repairService.filterRepairByPreferenceDate(startLimitDate, endLimitDate);
-        return new ResponseEntity<>(repairs,HttpStatus.FOUND);
+        return new ResponseEntity<>(repairs,HttpStatus.OK);
     }
 }

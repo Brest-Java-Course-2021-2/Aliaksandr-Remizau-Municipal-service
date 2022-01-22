@@ -19,31 +19,41 @@
     <!-- Component scan for @Controller, @Service... annotations -->
     <context:component-scan base-package="com.epam.brest.*"/>
 
-    <import resource="classpath*:test-db.xml"/>
+<!--    <import resource="classpath*:test-db.xml"/>-->
 
-    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+<!--    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
 
-    <bean id="clientDtoDao" class="com.epam.brest.dao.ClientDtoDaoJDBCImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
+<!--    <bean id="clientDtoDao" class="com.epam.brest.dao.ClientDtoDaoJDBCImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
 
-    <bean id="clientDtoService" class="com.epam.brest.service.impl.ClientDtoServiceImpl">
-        <constructor-arg name="clientDtoDao" ref="clientDtoDao"/>
+    <bean id="clientDtoService" class="com.epam.brest.service.rest.ClientDtoServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.clients_dto}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
-    <bean id="clientDao" class="com.epam.brest.dao.ClientDaoJDBCImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
+<!--    <bean id="clientDao" class="com.epam.brest.dao.ClientDaoJDBCImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
 
-    <bean id="clientService" class="com.epam.brest.service.impl.ClientServiceImpl">
-        <constructor-arg name="clientDao" ref="clientDao"/>
+    <bean id="clientService" class="com.epam.brest.service.rest.ClientServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.clients}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
+    </bean>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            </list>
+        </property>
     </bean>
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath*:test-db.properties</value>
-                <value>classpath*:sql-client.properties</value>
+                <value>classpath:application.properties</value>
+<!--                <value>classpath*:test-db.properties</value>-->
+<!--                <value>classpath*:sql-client.properties</value>-->
             </list>
         </property>
     </bean>

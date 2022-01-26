@@ -4,6 +4,7 @@ package com.epam.brest.service.rest;
 import com.epam.brest.model.Repair;
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
+import com.epam.brest.service.rest.config.ServiceRestTestConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -13,10 +14,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -27,14 +28,13 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath:app-context-test.xml"})
+@Import({ServiceRestTestConfig.class})
 class RepairServiceRestTest {
 
     private final Logger log = LogManager.getLogger(RepairServiceRestTest.class);
@@ -59,7 +59,7 @@ class RepairServiceRestTest {
             .build();
 
 
-    RepairServiceRest repairServiceRest;
+    private RepairServiceRest repairServiceRest;
 
     @BeforeEach
     void setUp() {

@@ -1,18 +1,19 @@
 package com.epam.brest.service.impl;
 
-import com.epam.brest.model.Client;
 import com.epam.brest.model.Repair;
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
-import com.epam.brest.service.ClientService;
 import com.epam.brest.service.RepairService;
+import com.epam.brest.service.config.RepairServiceTestConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +21,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:service-context-test.xml"})
+@Import({RepairServiceTestConfig.class})
+@PropertySource({"classpath:dao-sql.properties"})
 @Transactional
+@Rollback
 class RepairServiceImplIT {
     private final Logger log = LogManager.getLogger(RepairServiceImplIT.class);
+
     private static Repair testedRepair;
 
     @Autowired

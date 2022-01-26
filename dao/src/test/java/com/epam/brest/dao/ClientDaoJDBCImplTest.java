@@ -13,8 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,8 +44,8 @@ public class ClientDaoJDBCImplTest {
 
 
     @Test
-    public void testFindAll(){
-        log.debug("testFindAll()");
+    public void findAll(){
+        log.debug("findAll()");
         String sql = "select";
         ReflectionTestUtils.setField(clientDaoJDBC,"sqlAllClients",sql);
         Client client = new Client();
@@ -64,8 +63,8 @@ public class ClientDaoJDBCImplTest {
     }
 
     @Test
-    public void testGetClientById(){
-        log.debug("get clientById()");
+    public void getClientById(){
+        log.debug("getClientById()");
         int id = 0;
         String sql = "select";
         ReflectionTestUtils.setField(clientDaoJDBC,"sqlClientById",sql);

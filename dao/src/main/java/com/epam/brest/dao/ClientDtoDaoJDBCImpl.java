@@ -6,11 +6,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
  *  Client DTO DAO implementation.
  */
+@Component
 public class ClientDtoDaoJDBCImpl implements ClientDtoDao{
     private final Logger log = LogManager.getLogger(ClientDtoDaoJDBCImpl.class);
     /**

@@ -2,30 +2,33 @@ package com.epam.brest.dao;
 
 import com.epam.brest.dao.exception.DuplicateEntityException;
 import com.epam.brest.model.Client;
+import com.epam.brest.testdb.SpringJdbcConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-jdbc-conf.xml"})
+@DataJdbcTest
+@Import({ClientDaoJDBCImpl.class})
+@PropertySource({"classpath:dao-sql.properties"})
+@ContextConfiguration(classes = SpringJdbcConfig.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
 @Rollback
 class ClientDaoJDBCImplIT {
     private final Logger log = LogManager.getLogger(ClientDaoJDBCImplIT.class);
 
-    private final ClientDaoJDBCImpl clientDaoJDBC;
-
-    public ClientDaoJDBCImplIT(@Autowired ClientDao clientDaoJDBC) {
-        this.clientDaoJDBC = (ClientDaoJDBCImpl) clientDaoJDBC;
-    }
+    @Autowired
+    private  ClientDaoJDBCImpl clientDaoJDBC;
 
     @Test
     void testFindAll() {

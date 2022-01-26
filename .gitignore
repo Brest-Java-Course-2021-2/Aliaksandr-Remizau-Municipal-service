@@ -1,5 +1,15 @@
+HELP.md
 # Compiled class file
 *.class
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 # Log file
 *.log
@@ -13,9 +23,17 @@
 # IntellIj
 .idea/
 *.iml
+*.iws
+*.iml
+*.ipr
+
+
 
 # Package Files #
 target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 *.jar
 *.war
 *.nar

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../../resources/static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../../resources/static/css/style.css"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>Clients</title>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-light bg navbar-expand-sm text-light p-1">
+        <div class="container-fluid">
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="/" class="navbar-brand"><img src="../../resources/static/img/building.svg"
+                                                  th:src="@{/img/building.svg}"
+                                                  height="32" width="32" alt="MS"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="clients.html"
+                           th:href="@{/clients}">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="repairs.html"
+                           th:href="@{/repairs}">Repairs</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav id="main-header"
+         class="py-1 mb-3 navbar navbar-light bg-light text-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand text-uppercase">Clients</span>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="client.html"
+                       th:href="@{/client}"
+                       class="btn btn-sm btn-success"
+                       title="Add client">
+                        <i class="bi bi-box-arrow-in-down"></i>&nbsp;<span class="d-none d-sm-inline">New</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<section id="clients">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card " th:if="not ${clients.isEmpty()}">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Number of repairs</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="client : ${clients}">
+                            <td th:text="${client.clientName}">&nbspIvanov Ivan Ivanovich</td>
+                            <td th:text="${client.numberOfRepairs}">5</td>
+                            <td class="text-end">
+                                <a href="client.html"
+                                   th:href="@{|/client/${client.clientId}|}"
+                                   class="btn-sm btn-outline-primary"
+                                   title="Edit client">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog"
+                                      th:attr="data-id=${client.clientId},data-name=${client.clientName}">
+                                    <a href="#" class="btn-sm btn-outline-danger"
+                                       title="delete client"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr th:remove="all">
+                            <td>&nbspPetrov Aleksandr Nikolaevich</td>
+                            <td>2</td>
+                            <td class="text-end">
+                                <a href="client.html"
+                                   th:href="@{/client/2}"
+                                   class="btn-sm btn-outline-primary"
+                                   title="Edit client">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-danger"
+                                       title="delete client"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr th:remove="all">
+                            <td>&nbspVasiliev Nikolay Aleksandrovich</td>
+                            <td>4</td>
+                            <td class="text-end">
+                                <a href="client.html"
+                                   th:href="@{/client/3}"
+                                   class="btn-sm btn-outline-primary"
+                                   title="Edit client">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-danger"
+                                       title="delete client"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr th:remove="all">
+                            <td>&nbspSavchuk Maksim Aleksandrovich</td>
+                            <td>3</td>
+                            <td class="text-end">
+                                <a href="client.html"
+                                   th:href="@{/client/4}"
+                                   class="btn-sm btn-outline-primary"
+                                   title="Edit client">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-danger"
+                                       title="delete client"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr th:remove="all">
+                            <td>&nbspOblomov Vasiliy Ivanvich</td>
+                            <td>1</td>
+                            <td class="text-end">
+                                <a href="client.html"
+                                   th:href="@{/client/5}"
+                                   class="btn-sm btn-outline-primary"
+                                   title="Edit client">
+                                    <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
+                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <a href="#" class="btn-sm btn-outline-danger"
+                                       title="delete client"><i class="bi bi-trash"></i><span
+                                            class="d-none d-md-inline">&nbsp;Delete</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <hr/>
+    <p class="text-center">&copy;Epam Brest-Java-Course 2021</p>
+</footer>
+
+<!-- Confirm delete Modal -->
+<div class="modal fade" id="deleteDialog" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
+                <svg class="bi bi-alert-triangle text-success" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                </svg>
+                <h5 class="modal-title" id="exampleModalLabel">Delete client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                &nbsp&nbspPlease confirm delete!
+            </div>
+            <div class="modal-footer">
+                <a id="cancelDelete"  href="clients.html" th:href="@{/clients}"
+                   class="btn btn-primary"  data-dismiss="modal">Cancel</a>
+                <a id="deleteUrl" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../resources/static/js/bootstrap.bundle.min.js"
+        th:href="@{/js/bootstrap.bundle.min.js}"></script>
+<script src="../../resources/static/js/jquery-3.4.1.slim.min.js"
+        th:src="@{/js/jquery-3.4.1.slim.min.js}"></script>
+<script>
+    $('#deleteDialog').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget)
+        $(this).find('.modal-body').text('Please confirm delete client: "' + target.data('name') + '"')
+        document.getElementById('deleteUrl').href = '/client/' + target.data('id') + '/delete';
+    })
+
+</script>
+</body>
+</html>

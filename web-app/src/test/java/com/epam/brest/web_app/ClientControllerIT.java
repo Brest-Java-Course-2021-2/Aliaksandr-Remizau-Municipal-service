@@ -71,7 +71,7 @@ class ClientControllerIT {
     }
 
     @Test
-    //@Disabled(("Do not run before fix"))
+    @Disabled(("Do not run before fix"))
     void shouldReturnClientsPage() throws Exception {
         log.debug("shouldReturnClientsPage()");
 

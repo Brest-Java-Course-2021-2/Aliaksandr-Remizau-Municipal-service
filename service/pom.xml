@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>com.epam.brest</groupId>
-            <artifactId>test-db</artifactId>
+            <artifactId>db</artifactId>
         </dependency>
 
         <dependency>

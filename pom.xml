@@ -18,7 +18,7 @@
 		<module>service-rest</module>
 		<module>rest-app</module>
 		<module>web-app</module>
-		<module>test-db</module>
+		<module>db</module>
 
 	</modules>
 
@@ -65,7 +65,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.epam.brest</groupId>
-				<artifactId>test-db</artifactId>
+				<artifactId>db</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

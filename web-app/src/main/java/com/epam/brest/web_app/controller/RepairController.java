@@ -57,8 +57,8 @@ public class RepairController {
     @GetMapping(value = "/repairs")
     public final String repairs(Model model) {
         log.debug("go to the repairs page");
-        model.addAttribute("clients",clientService.findAll());
         model.addAttribute("repairs",repairService.findAll());
+        model.addAttribute("clients",clientService.findAll());
         return "repairs";
     }
     /**

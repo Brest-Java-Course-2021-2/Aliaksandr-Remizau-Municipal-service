@@ -193,7 +193,7 @@
 </div>
 
 <script src="../../resources/static/js/bootstrap.bundle.min.js"
-        th:href="@{/js/bootstrap.bundle.min.js}"></script>
+        th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script src="../../resources/static/js/jquery-3.4.1.slim.min.js"
         th:src="@{/js/jquery-3.4.1.slim.min.js}"></script>
 <script>
@@ -202,7 +202,6 @@
         $(this).find('.modal-body').text('Please confirm delete client: "' + target.data('name') + '"')
         document.getElementById('deleteUrl').href = '/client/' + target.data('id') + '/delete';
     })
-
 </script>
 </body>
 </html>

@@ -40,6 +40,7 @@
 		<hamcrest.version>1.3</hamcrest.version>
 		<mockito.version>4.1.0</mockito.version>
 		<json-path.version>2.0.0</json-path.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
 		<jacoco.it.execution.data.file>
 			${project.build.directory}/coverage-reports/jacoco-it.exec
@@ -161,6 +162,45 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<version>${spring-boot.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${build-helper-maven-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${maven-failsafe-plugin.version}</version>
+					<executions>
+						<execution>
+							<id>integration-test</id>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<classesDirectory>${project.build.outputDirectory}</classesDirectory>
+						<runOrder>alphabetical</runOrder>
+						<reportsDirectory>${junit.itReportFolder}</reportsDirectory>
+						<includes>
+							<include>**/*IT*</include>
+						</includes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<reportsDirectory>${junit.utReportFolder}</reportsDirectory>
+						<excludes>
+							<exclude>**/*IT*</exclude>
+						</excludes>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

@@ -2,11 +2,9 @@ package com.epam.brest.web_app;
 
 import com.epam.brest.model.Client;
 import com.epam.brest.model.dto.ClientDto;
-import com.epam.brest.service.ClientDtoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -27,16 +25,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.ExpectedCount.once;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -57,9 +50,6 @@ class ClientControllerIT {
 
     private MockRestServiceServer mockServer;
 
-    @Autowired
-     private ClientDtoService clientDtoService;
-
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
@@ -71,33 +61,33 @@ class ClientControllerIT {
     }
 
     @Test
-    @Disabled(("Do not run before fix"))
+    @Disabled
     void shouldReturnClientsPage() throws Exception {
         log.debug("shouldReturnClientsPage()");
-
 
         ClientDto clientDto1 = new ClientDto(1,"Client1",2);
         ClientDto clientDto2 = new ClientDto(2,"Client2",4);
 
-        List<ClientDto> clientDtoList = Arrays.asList(clientDto1, clientDto2);
-        mockServer.expect(once(), requestTo(new URI(CLIENT_DTO_URL)))
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(CLIENT_DTO_URL)))
                 .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess()
+                .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(objectMapper.writeValueAsString(clientDtoList))
+                        .body(objectMapper.writeValueAsString(Arrays.asList(clientDto1,clientDto2)))
                 );
-        // THEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/clients")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/clients")
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("clients"))
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(1)),
                                 hasProperty("clientName", is("Client1")),
-                                hasProperty("numberOfRepairs", is(2))
+                                hasProperty("numberOfRepairs", is(2)))
                         )
-                )))
+                            ))
                 .andExpect(model().attribute("clients", hasItem(
                         allOf(
                                 hasProperty("clientId", is(2)),
@@ -107,7 +97,6 @@ class ClientControllerIT {
                 )));
         // VERIFY
         mockServer.verify();
-
     }
 
     @Test

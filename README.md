@@ -5,7 +5,7 @@
 
 This is simple 'Municipal Service' Spring Boot web application for record-keeping tenants' requests of repairs.
 
-* ###[Documentation](documentation/MunicipalService-specification(ENG).md)
+*[Documentation](documentation/MunicipalService-specification(ENG).md)
 ## Requirements
 
 * JDK 11+

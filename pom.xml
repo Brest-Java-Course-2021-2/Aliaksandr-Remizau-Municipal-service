@@ -7,7 +7,7 @@
 	<artifactId>ms</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>ms</name>
-	<description>Aggregator for Spring Boot</description>
+	<description>Spring Boot applications "Municipal-service "</description>
 
 	<modules>
 		<module>model</module>
@@ -19,7 +19,6 @@
 		<module>rest-app</module>
 		<module>web-app</module>
 		<module>db</module>
-
 	</modules>
 
 	<properties>

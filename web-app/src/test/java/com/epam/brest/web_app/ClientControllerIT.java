@@ -24,9 +24,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
@@ -97,6 +99,24 @@ class ClientControllerIT {
                 )));
         // VERIFY
         mockServer.verify();
+    }
+    @Test
+    void shouldReturnClientDto() throws Exception {
+        ClientDto clientDto1 = new ClientDto(1,"Client1",2);
+        ClientDto clientDto2 = new ClientDto(2,"Client2",4);
+
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(CLIENT_DTO_URL)))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(objectMapper.writeValueAsString(Arrays.asList(clientDto1,clientDto2)))
+                );
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/clients")
+                ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("clients"))
+                .andExpect(model().hasNoErrors());
     }
 
     @Test

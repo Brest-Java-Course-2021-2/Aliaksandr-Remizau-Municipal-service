@@ -1,4 +1,6 @@
 package com.epam.brest.model.dto;
+
+
 /**
  * POJO Client for model.
  */

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.PropertySource;
 
+
 @SpringBootApplication
 @PropertySource({"classpath:dao-sql.properties"})
 public class RestApplication extends SpringBootServletInitializer {

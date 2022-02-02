@@ -2,6 +2,8 @@ package com.epam.brest.rest;
 
 import com.epam.brest.model.dto.ClientDto;
 import com.epam.brest.service.ClientDtoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import java.util.List;
  * Client Dto Controller.
  */
 @RestController
+@Tag(name = "ClientDtoController")
 public class ClientDtoController {
     /**
      * Logger.
@@ -41,6 +44,7 @@ public class ClientDtoController {
      */
 
     @GetMapping(value = "/clients_dto")
+    @Operation(summary = "Get all clients DTO with count of repairs")
     public final List<ClientDto> getClientsDtoWithCountRepairs(){
 
         log.debug("getClientsDtoWithCountRepairs({})");

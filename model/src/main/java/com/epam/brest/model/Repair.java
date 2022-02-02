@@ -2,6 +2,7 @@ package com.epam.brest.model;
 
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 /**
  * POJO Repair for model.
  */
+
 public class Repair {
 
     /**
@@ -21,21 +23,25 @@ public class Repair {
     /**
      *  Enum Type of Repair
      */
+    @Schema(name = "RepairType", description = "type of repair")
     private RepairType repairType;
 
     /**
      *  String Address of Repair
      */
+    @Schema(name = "Address", description = "address of repair")
     private String address;
 
     /**
      *  Enum LevelOfDifficulty of Repair
      */
+    @Schema(name = "LevelOfDifficulty", description = "difficulty of repair")
     private LevelOfDifficulty difficultyLevel;
 
     /**
      *  preference Date of the repair.
      */
+    @Schema(name = "PreferenceDate", description = "preference date of repair")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate preferenceDate;
@@ -168,23 +174,6 @@ public class Repair {
      */
     public void setClientId(Integer clientId) {
         this.clientId = clientId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Repair)) return false;
-        Repair repair = (Repair) o;
-        return Objects.equals(getRepairId(), repair.getRepairId()) &&
-                getRepairType() == repair.getRepairType() && Objects.equals(getAddress(), repair.getAddress()) &&
-                getDifficultyLevel() == repair.getDifficultyLevel() &&
-                Objects.equals(getPreferenceDate(), repair.getPreferenceDate()) &&
-                Objects.equals(getClientId(), repair.getClientId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getRepairId(), getRepairType(), getAddress(), getDifficultyLevel(), getPreferenceDate(), getClientId());
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.epam.brest.rest;
 
 import com.epam.brest.model.Client;
 import com.epam.brest.service.ClientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import java.util.List;
 /**
  * Client Rest Controller.
  */
+@Tag(name = "Client Controller")
 @RestController
 public class ClientController {
     /**
@@ -39,7 +42,7 @@ public class ClientController {
      *
      * @return client's list in json.
      */
-
+    @Operation(summary = "Get all clients")
     @GetMapping(value = "/clients")
     public final List<Client> findAll(){
 
@@ -53,7 +56,7 @@ public class ClientController {
      * @param id client.
      * @return client in json.
      */
-
+    @Operation(summary = "Get client by its specific ID")
     @GetMapping(value = "/clients/{id}")
     public final Client getClientById(@PathVariable Integer id) {
 
@@ -67,7 +70,7 @@ public class ClientController {
      * @param client .
      * @return id created client,HttpStatus.OK.
      */
-
+    @Operation(summary = "Create new client")
     @PostMapping(path = "/clients", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Integer> createClient(@RequestBody Client client) {
 
@@ -82,7 +85,7 @@ public class ClientController {
      * @param  client .
      * @return int result amount of updated client,HttpStatus.OK.
      */
-
+    @Operation(summary = "Update client ")
     @PutMapping(value = "/clients", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Integer> updateClient(@RequestBody Client client) {
 
@@ -97,7 +100,7 @@ public class ClientController {
      * @param  id .
      * @return int result amount of deleted client,HttpStatus.OK.
      */
-
+    @Operation(summary = "Delete client ")
     @DeleteMapping(value = "/clients/{id}", produces = {"application/json"})
     public ResponseEntity<Integer> deleteClient(@PathVariable Integer id) {
 

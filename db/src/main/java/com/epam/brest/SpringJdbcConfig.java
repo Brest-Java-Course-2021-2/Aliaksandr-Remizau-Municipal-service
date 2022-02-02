@@ -1,4 +1,4 @@
-package com.epam.brest.db;
+package com.epam.brest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

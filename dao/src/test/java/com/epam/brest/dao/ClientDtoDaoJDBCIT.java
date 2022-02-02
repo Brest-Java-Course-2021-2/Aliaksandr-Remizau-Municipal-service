@@ -1,6 +1,6 @@
 package com.epam.brest.dao;
 
-import com.epam.brest.db.SpringJdbcConfig;
+import com.epam.brest.SpringJdbcConfig;
 import com.epam.brest.model.dto.ClientDto;
 
 import org.apache.logging.log4j.LogManager;

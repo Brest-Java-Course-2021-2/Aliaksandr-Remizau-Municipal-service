@@ -14,6 +14,7 @@ public class Client {
     /**
      * Client Id.
      */
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Integer clientId;
     /**
      * Client Name.

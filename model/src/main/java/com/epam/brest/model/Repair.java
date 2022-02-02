@@ -18,6 +18,7 @@ public class Repair {
     /**
      * Integer Repair ID.
      */
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Integer repairId;
 
     /**
@@ -49,6 +50,7 @@ public class Repair {
     /**
      * ID of client ordering repair.
      */
+    @Schema(name = "client ID", description = "ID of the client who ordered the repair")
     private Integer clientId;
 
     /**

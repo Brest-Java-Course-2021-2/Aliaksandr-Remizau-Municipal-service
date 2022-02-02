@@ -36,3 +36,12 @@ The rest application will be available at [http://localhost:8088](http://localho
       java -jar ./web-app/target/web-app-1.0-SNAPSHOT.jar
 
 The web application will be available at [http://localhost:8080](http://localhost:8080).
+
+## REST API Documentation
+
+API documentation with Swagger UI:
+[http://localhost:8088/swagger-ui.html](http://localhost:8088/swagger-ui.html)
+
+The OpenAPI 3.0 descriptions in JSON format will be available at the path:
+[http://localhost:8088/v3/api-docs](http://localhost:8088/v3/api-docs)
+ 

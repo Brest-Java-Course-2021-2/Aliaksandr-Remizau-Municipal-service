@@ -1,11 +1,15 @@
 package com.epam.brest.model;
 
-import org.springframework.lang.NonNull;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 /**
  * POJO Client for model.
  */
+@Schema(name="Client", description = "Client")
 public class Client {
     /**
      * Client Id.
@@ -14,6 +18,9 @@ public class Client {
     /**
      * Client Name.
      */
+    @Schema(name = "Name", description = "name of the client")
+    @NotEmpty(message = "Client name can not be empty.")
+    @Size(min = 1, max = 255, message = "Client name must be between 2 and 50 characters.")
     private String clientName;
 
     /**
@@ -81,22 +88,6 @@ public class Client {
         this.clientName = clientName;
         return this;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if ((!(o instanceof Client))) return false;
-        Client client = (Client) o;
-        return Objects.equals(getClientId(), client.getClientId()) &&
-                Objects.equals(getClientName(), client.getClientName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getClientId(), getClientName());
-    }
-
 
     @Override
     public String toString() {

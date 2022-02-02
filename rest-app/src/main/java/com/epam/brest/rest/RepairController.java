@@ -3,6 +3,8 @@ package com.epam.brest.rest;
 
 import com.epam.brest.model.Repair;
 import com.epam.brest.service.RepairService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 
 @RestController
+@Tag(name = "RepairController")
 public class RepairController {
     /**
      * Logger.
@@ -45,6 +48,7 @@ public class RepairController {
      *
      * @return repair's list in json.
      */
+    @Operation(summary = "Get all repairs")
     @GetMapping(value = "/repairs")
     public ResponseEntity<List<Repair>> findAll(){
 
@@ -59,7 +63,7 @@ public class RepairController {
      * @param id repair.
      * @return repair in json.
      */
-
+    @Operation(summary = "Get repairs depend on its ID")
     @GetMapping(value = "/repairs/{id}", produces = {"application/json"})
     public ResponseEntity< Repair> getRepairById(@PathVariable Integer id) {
 
@@ -75,7 +79,7 @@ public class RepairController {
      * @param repair .
      * @return id created repair,HttpStatus.OK.
      */
-
+    @Operation(summary = "Create new repair")
     @PostMapping(path = "/repairs", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Integer> createRepair(@RequestBody Repair repair) {
 
@@ -90,7 +94,7 @@ public class RepairController {
      * @param  repair .
      * @return int result amount of updated repair,HttpStatus.OK.
      */
-
+    @Operation(summary = "Update repair")
     @PutMapping(value = "/repairs", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Integer> updateRepair(@RequestBody Repair repair) {
 
@@ -105,7 +109,7 @@ public class RepairController {
      * @param  id .
      * @return int result amount of deleted repair,HttpStatus.OK.
      */
-
+    @Operation(summary = "Delete repair")
     @DeleteMapping(value = "/repairs/{id}", produces = {"application/json"})
     public ResponseEntity<Integer> deleterRepair(@PathVariable Integer id) {
 
@@ -119,7 +123,7 @@ public class RepairController {
      * @param endLimitDate - end date.
      * @return - list of repairs .
      */
-
+    @Operation(summary = "Filter repairs depend on preference date ")
     @GetMapping(value = "/repairs/filter" ,produces = {"application/json"})
     public ResponseEntity<List<Repair>> filterRepairByPreferenceDate(
             @RequestParam("startLimitDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startLimitDate,

@@ -5,7 +5,7 @@ import com.epam.brest.dao.RepairDao;
 import com.epam.brest.dao.RepairDaoJDBCImpl;
 import com.epam.brest.service.RepairService;
 import com.epam.brest.service.impl.RepairServiceImpl;
-import com.epam.brest.db.SpringJdbcConfig;
+import com.epam.brest.SpringJdbcConfig;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 

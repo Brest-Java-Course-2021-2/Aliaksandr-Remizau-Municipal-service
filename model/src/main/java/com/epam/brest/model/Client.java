@@ -1,6 +1,7 @@
 package com.epam.brest.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.lang.NonNull;
 
 
 import javax.validation.constraints.NotEmpty;
@@ -19,9 +20,10 @@ public class Client {
     /**
      * Client Name.
      */
+    @NonNull
     @Schema(name = "Name", description = "name of the client")
-    @NotEmpty(message = "Client name can not be empty.")
-    @Size(min = 1, max = 255, message = "Client name must be between 2 and 50 characters.")
+    @NotEmpty(message = "Please provide client name.")
+    @Size(min = 1, max = 250, message = "Client name must be between {min} and {max} characters.")
     private String clientName;
 
     /**

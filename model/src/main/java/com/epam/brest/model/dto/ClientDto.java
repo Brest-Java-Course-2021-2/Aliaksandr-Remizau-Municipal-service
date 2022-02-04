@@ -96,7 +96,8 @@ public class ClientDto {
 
     public Integer getNumberOfRepairs() {
         return numberOfRepairs;
-    }/**
+    }
+    /**
      * Sets the client's  number of repairs.
      *
      * @param numberOfRepairs Number of repairs.

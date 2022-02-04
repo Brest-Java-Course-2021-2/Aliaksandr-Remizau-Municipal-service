@@ -2,13 +2,16 @@ package com.epam.brest.model;
 
 import com.epam.brest.model.type.LevelOfDifficulty;
 import com.epam.brest.model.type.RepairType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.lang.NonNull;
 
-
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Objects;
 /**
  * POJO Repair for model.
  */
@@ -24,33 +27,42 @@ public class Repair {
     /**
      *  Enum Type of Repair
      */
+    @NonNull
     @Schema(name = "RepairType", description = "type of repair")
+    @NotEmpty(message = "Please provide type of repair!")
     private RepairType repairType;
 
     /**
      *  String Address of Repair
      */
+    @NonNull
     @Schema(name = "Address", description = "address of repair")
+    @Size(min = 1, max = 50, message = "Address  size have to be  less or equals  250 symbols!")
     private String address;
 
     /**
      *  Enum LevelOfDifficulty of Repair
      */
+    @NonNull
     @Schema(name = "LevelOfDifficulty", description = "difficulty of repair")
+    @NotEmpty(message = "Please provide level of difficulty!")
     private LevelOfDifficulty difficultyLevel;
 
     /**
      *  preference Date of the repair.
      */
+    @NotNull(message = "Please provide your preference date of repair")
     @Schema(name = "PreferenceDate", description = "preference date of repair")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent(message = "Incorrect value. Date can not be future")
     private LocalDate preferenceDate;
 
     /**
      * ID of client ordering repair.
      */
     @Schema(name = "client ID", description = "ID of the client who ordered the repair")
+    @NotEmpty(message = "Select repair owner")
     private Integer clientId;
 
     /**

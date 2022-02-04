@@ -1,6 +1,7 @@
 package com.epam.brest.web_app.controller;
 
 import com.epam.brest.model.Client;
+import com.epam.brest.model.dto.ClientDto;
 import com.epam.brest.service.ClientDtoService;
 import com.epam.brest.service.ClientService;
 import com.epam.brest.web_app.validators.ClientValidator;

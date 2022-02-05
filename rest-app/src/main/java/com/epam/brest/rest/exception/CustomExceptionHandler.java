@@ -1,14 +1,19 @@
 package com.epam.brest.rest.exception;
 
 import com.epam.brest.dao.exception.DuplicateEntityException;
+import com.epam.brest.dao.exception.EmptyFieldEntityException;
 import com.epam.brest.service.impl.exceptions.ClientNotFoundException;
 import com.epam.brest.service.impl.exceptions.RepairNotFoundException;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -45,6 +50,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String VALIDATION_ERROR = "validation_error";
 
     /**
+     * Field constant DATA_BASE_ERROR.
+     */
+    public static final String DATA_BASE_ERROR = "data_base_error";
+
+    /**
      * Exception handler  Repair not found exception.
      *
      * @param ex RepairNotFoundException class.
@@ -53,6 +63,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      */
 
     @ExceptionHandler(RepairNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public final ResponseEntity<ErrorResponse> handleRepairNotFoundException
             (RepairNotFoundException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
@@ -70,6 +81,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      */
 
     @ExceptionHandler(ClientNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public final ResponseEntity<ErrorResponse> handleClientNotFoundException
             (ClientNotFoundException ex, WebRequest request) {
         List<String> details = new ArrayList<>();
@@ -94,6 +106,38 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse(VALIDATION_ERROR, details);
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+    /**
+     * Exception handler EmptyFieldEntityException exception.
+     *
+     * @param ex EmptyFieldEntityException class.
+     * @param request WebRequest class.
+     * @return error response and HTTP status.
+     */
+
+    @ExceptionHandler(EmptyFieldEntityException.class)
+    public final ResponseEntity<ErrorResponse> handleEmptyFieldEntityException
+    (EmptyFieldEntityException ex, WebRequest request) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getLocalizedMessage());
+        ErrorResponse error = new ErrorResponse(VALIDATION_ERROR, details);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    /**
+     * Exception handler DataIntegrityViolationException.
+     *
+     * @param ex DataIntegrityViolationException class.
+     * @param request WebRequest class.
+     * @return error response and HTTP status.
+     */
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException
+        (DataIntegrityViolationException ex, WebRequest request) {
+            List<String> details = new ArrayList<>();
+            details.add(ExceptionUtils.getRootCauseMessage(ex));
+            ErrorResponse error = new ErrorResponse(DATA_BASE_ERROR, details);
+            return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 
     /**
      * Exception handler IllegalArgumentException.
@@ -110,4 +154,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 new ErrorResponse(VALIDATION_ERROR, ex),
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
 }

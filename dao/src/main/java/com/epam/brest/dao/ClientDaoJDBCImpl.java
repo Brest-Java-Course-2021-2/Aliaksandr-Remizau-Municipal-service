@@ -1,6 +1,7 @@
 package com.epam.brest.dao;
 
 import com.epam.brest.dao.exception.DuplicateEntityException;
+import com.epam.brest.dao.exception.EmptyFieldEntityException;
 import com.epam.brest.model.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -107,6 +108,11 @@ public class ClientDaoJDBCImpl implements ClientDao {
             log.warn("Client with the same name {} already exists.", client.getClientName());
             throw new DuplicateEntityException("Client with the same name already exists in DB.");
         }
+        if(client.getClientName().isEmpty()){
+            log.warn("Please provide client name!");
+            throw new EmptyFieldEntityException("Please provide client name!");
+        }
+
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("clientName", client.getClientName().toUpperCase());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(sqlCreateClient, sqlParameterSource, keyHolder);

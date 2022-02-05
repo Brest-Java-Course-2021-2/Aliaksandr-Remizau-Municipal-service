@@ -85,6 +85,7 @@ public class ClientServiceImpl implements ClientService {
 
         log.debug("delete client id:{}",clientId);
         try {
+            clientDao.getClientById(clientId);
             return this.clientDao.delete(clientId);
         }catch (EmptyResultDataAccessException ex){
             throw new ClientNotFoundException(clientId);

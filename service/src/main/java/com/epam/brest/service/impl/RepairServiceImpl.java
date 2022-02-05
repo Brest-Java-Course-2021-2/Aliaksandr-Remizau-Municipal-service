@@ -68,6 +68,7 @@ public class RepairServiceImpl implements RepairService {
     public Integer update(Repair repair) {
         log.debug("update({})",repair);
         try {
+            repairDao.getRepairById(repair.getRepairId());
             return this.repairDao.update(repair);
         }catch (EmptyResultDataAccessException ex){
             throw new RepairNotFoundException(repair.getRepairId());
@@ -79,6 +80,7 @@ public class RepairServiceImpl implements RepairService {
     public Integer delete(Integer repairId) {
         log.debug("delete({})",repairId);
         try {
+            repairDao.getRepairById(repairId);
             return this.repairDao.delete(repairId);
         }catch (EmptyResultDataAccessException ex){
             throw new RepairNotFoundException(repairId);

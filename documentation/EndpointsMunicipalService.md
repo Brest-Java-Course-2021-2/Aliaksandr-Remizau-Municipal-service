@@ -1,17 +1,17 @@
 #  Available REST endpoints
 
 
-###[Version](#version)
-###[Clients](#clients)
+### [Version](#version)
+### [Clients](#clients)
   * [Get all clients DTO](#get-all-clients-dto)
   * [Get all clients](#get-all-clients)
-  * [Get client by ID](#get-client-by-ID)
+  * [Get client](#get-client)
   * [Create a new client](#create-a-new-client)
   * [Update a client](#update-a-client)
   * [Delete a client](#delete-a-client)
-###[Repairs](#repairs)
+### [Repairs](#repairs)
   * [Get all repairs](#get-all-repairs)
-  * [Get  repair by ID](#get-repair-by-ID)
+  * [Get  repair](#get-repair)
   * [Create a new repair](#create-a-new-repair)
   * [Update a repair](#update-a-repair)
   * [Delete a repair](#delete-a-repair)
@@ -106,7 +106,7 @@ Response Example
 
 </details>
 
-#### Get client by ID
+#### Get client
 
 Get information about specific identified by its unique ID.
 
@@ -345,7 +345,7 @@ curl --location --request GET 'http://localhost:8088/repairs'
 
 </details>
 
-#### Get repair by ID
+#### Get repair
 
 Get information for a single repair identified by its unique ID.
 
@@ -428,7 +428,7 @@ An attempt to create repair with invalid fields.
 
 </details>
 
-#### Update  a repair
+#### Update a repair
 
 
 ```bash
